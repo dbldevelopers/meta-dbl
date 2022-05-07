@@ -1,0 +1,15 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libosmscout
+Description: OpenstreetMap maps
+URL: http://libosmscout.sourceforge.net/
+Version: 1.1.1
+#Requires: glib-2.0 gobject-2.0 gstreamer-1.0 gstreamer-base-1.0 gstreamer-plugins-base-1.0
+#Requires.private: libxml-2.0 zlib libjpeg libtiff libpng16
+Cflags: -I${includedir}/osmscout
+Libs: -L${libdir} -losmscout -losmscout_client_qt -losmscout_gpx -losmscout_map -losmscout_map_qt -losmscout_map_svg
+#Libs.private: -lm -lz
+#-ldrm -lpthread -lrt

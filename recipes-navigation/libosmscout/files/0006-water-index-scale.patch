@@ -1,0 +1,19 @@
+diff --git a/libosmscout/src/osmscout/WaterIndex.cpp b/libosmscout/src/osmscout/WaterIndex.cpp
+index 38444d9bb..c97043cc9 100644
+--- a/libosmscout/src/osmscout/WaterIndex.cpp
++++ b/libosmscout/src/osmscout/WaterIndex.cpp
+@@ -259,7 +259,13 @@ namespace osmscout {
+       }
+ 
+       idx+=4;
+-
++      
++      // !!!
++      if (7 < idx && idx < 10) {
++          idx = 10; // Brutal hack to avoid improper map rendering at certain levels when using imported basemap )))
++      }/**/
++      //log.Info() << "WaterIndex idx " << idx << " minMag " << waterIndexMinMag;
++      
+       idx=std::max(waterIndexMinMag,idx);
+       idx=std::min(waterIndexMaxMag,idx);
+ 

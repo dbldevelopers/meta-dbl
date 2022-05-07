@@ -1,0 +1,24 @@
+diff --git a/libosmscout-client-qt/CMakeLists.txt b/libosmscout-client-qt/CMakeLists.txt
+index 4bdb48508..b08b11c0c 100644
+--- a/libosmscout-client-qt/CMakeLists.txt
++++ b/libosmscout-client-qt/CMakeLists.txt
+@@ -111,6 +111,7 @@ set(SOURCE_FILES
+     src/osmscout/AvailableVoicesModel.cpp
+     src/osmscout/VoiceProvider.cpp
+     src/osmscout/InstalledVoicesModel.cpp
++    src/osmscout/plugin.cpp
+ )
+ 
+ osmscout_library_project(
+@@ -123,6 +124,11 @@ osmscout_library_project(
+ 	TARGET OSMScout::OSMScout OSMScout::Map OSMScout::MapQt Qt5::Core Qt5::Gui Qt5::Quick Qt5::Multimedia
+ )
+ 
++target_compile_definitions(OSMScoutClientQt PRIVATE
++        QT_PLUGIN
++        QT_DEPRECATED_WARNINGS
++)
++
+ if(MARISA_FOUND)
+     target_include_directories(OSMScoutClientQt PUBLIC ${MARISA_INCLUDE_DIRS})
+     target_link_libraries(OSMScoutClientQt ${MARISA_LIBRARIES})
