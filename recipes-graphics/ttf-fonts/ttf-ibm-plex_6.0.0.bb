@@ -13,7 +13,7 @@ inherit allarch fontcache
 SUMMARY = "IBM Plex fonts"
 HOMEPAGE = "https://github.com/IBM/plex"
 LICENSE = "OFL-1.1"
-LIC_FILES_CHKSUM = "file://${S}/IBM-Plex-Mono/license.txt;md5=fce5baa9b16328f04e2afc29f6e4e882"
+LIC_FILES_CHKSUM = "file://${S}/TrueType/IBM-Plex-Mono/license.txt;md5=fce5baa9b16328f04e2afc29f6e4e882"
 
 SRC_URI = "https://github.com/IBM/plex/releases/download/v${PV}/TrueType.zip"
 SRC_URI[md5sum] = "80d2416485bc24d785bbf3be94129991"
