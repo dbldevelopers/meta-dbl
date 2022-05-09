@@ -13,7 +13,6 @@ inherit allarch fontcache
 SUMMARY = "Fira code font"
 HOMEPAGE = "https://github.com/tonsky/FiraCode"
 LICENSE = "OFL-1.1"
-LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=fce5baa9b16328f04e2afc29f6e4e882"
 
 SRC_URI = "https://github.com/tonsky/FiraCode/releases/download/${PV}/Fira_Code_v${PV}.zip"
 SRC_URI[md5sum] = "77dfd6d902db1ee8d8a6722373ce7933"
