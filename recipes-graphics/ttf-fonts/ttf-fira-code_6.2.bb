@@ -16,8 +16,8 @@ LICENSE = "OFL-1.1"
 LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=fce5baa9b16328f04e2afc29f6e4e882"
 
 SRC_URI = "https://github.com/tonsky/FiraCode/releases/download/${PV}/Fira_Code_v${PV}.zip"
-SRC_URI[md5sum] = "3b43a5cb33196ec25e44d5fcb40219e1"
-SRC_URI[sha256sum] = "c825453253f590cfe62557733e7173f9a421fff103b00f57d33c4ad28ae53baf"
+SRC_URI[md5sum] = "77dfd6d902db1ee8d8a6722373ce7933"
+SRC_URI[sha256sum] = "0949915ba8eb24d89fd93d10a7ff623f42830d7c5ffc3ecbf960e4ecad3e3e79"
 
 S = "${WORKDIR}"
 

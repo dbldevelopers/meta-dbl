@@ -16,8 +16,8 @@ LICENSE = "OFL-1.1"
 LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=fce5baa9b16328f04e2afc29f6e4e882"
 
 SRC_URI = "https://github.com/IBM/plex/releases/download/v${PV}/TrueType.zip"
-SRC_URI[md5sum] = "3b43a5cb33196ec25e44d5fcb40219e1"
-SRC_URI[sha256sum] = "c825453253f590cfe62557733e7173f9a421fff103b00f57d33c4ad28ae53baf"
+SRC_URI[md5sum] = "80d2416485bc24d785bbf3be94129991"
+SRC_URI[sha256sum] = "16253500de140321175bb94e65fd227c6b12efc050eb298c20322dbf3713a8e0"
 
 S = "${WORKDIR}"
 
