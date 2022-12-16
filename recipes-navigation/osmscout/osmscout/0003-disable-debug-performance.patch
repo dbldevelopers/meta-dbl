@@ -1,0 +1,48 @@
+diff --git a/Tests/src/MultiDBRouting.cpp b/Tests/src/MultiDBRouting.cpp
+index 2486ac450..d9bf937fd 100644
+--- a/Tests/src/MultiDBRouting.cpp
++++ b/Tests/src/MultiDBRouting.cpp
+@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
+   osmscout::log.Warn(true);
+   osmscout::log.Error(true);
+ 
+-  routerParameter.SetDebugPerformance(true);
++  routerParameter.SetDebugPerformance(false);
+ 
+   for (const auto& databaseDirectory:args.databaseDirectories) {
+     std::cout << "Opening database " << databaseDirectory << std::endl;
+@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
+   std::cout << "Done." << std::endl;
+ 
+   osmscout::RouterParameter routerParam;
+-  routerParam.SetDebugPerformance(true);
++  routerParam.SetDebugPerformance(false);
+   osmscout::MultiDBRoutingServiceRef router=std::make_shared<osmscout::MultiDBRoutingService>(routerParam,databases);
+ 
+   std::cout << "Opening router..." << std::endl;
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp b/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp
+index 8720cf96f..4061bd5c8 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp
+@@ -331,7 +331,7 @@ void PlaneMapRenderer::DrawMap()
+     drawParameter.SetIconPaths(paths);
+     drawParameter.SetPatternPaths(paths);
+     drawParameter.SetDebugData(false);
+-    drawParameter.SetDebugPerformance(true);
++    drawParameter.SetDebugPerformance(false);
+     // We want to get notified, if we have more than 1000 objects from a certain type (=> move type rendering to a higher zoom level?)
+     drawParameter.SetWarningObjectCountLimit(1000);
+     // We want to get notified, if we have more than 20000 coords from a certain type (=> move type rendering to a higher zoom level?)
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp b/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp
+index 3161cfe5e..38b6afce5 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp
+@@ -430,7 +430,7 @@ void TiledMapRenderer::onLoadJobFinished(QMap<QString,QMap<osmscout::TileKey,osm
+     drawParameter.SetIconPaths(paths);
+     drawParameter.SetPatternPaths(paths);
+     drawParameter.SetDebugData(false);
+-    drawParameter.SetDebugPerformance(true);
++    drawParameter.SetDebugPerformance(false);
+ 
+     // optimize process can reduce number of nodes before rendering
+     // it helps for slow renderer backend, but it cost some cpu

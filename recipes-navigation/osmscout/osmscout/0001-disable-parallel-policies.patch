@@ -1,0 +1,80 @@
+diff --git a/libosmscout-import/CMakeLists.txt b/libosmscout-import/CMakeLists.txt
+index 4cbaf00b7..8ab1e3cef 100644
+--- a/libosmscout-import/CMakeLists.txt
++++ b/libosmscout-import/CMakeLists.txt
+@@ -140,6 +140,9 @@ osmscout_library_project(
+ 	SKIP_HEADER
+ )
+ 
++target_compile_definitions(OSMScoutImport PUBLIC PSTL_USE_PARALLEL_POLICIES=0)
++target_compile_definitions(OSMScoutImport PUBLIC _GLIBCXX_USE_TBB_PAR_BACKEND=0)
++
+ if(LIBXML2_FOUND)
+ 	target_include_directories(OSMScoutImport PRIVATE ${LIBXML2_INCLUDE_DIR})
+ 	target_link_libraries(OSMScoutImport ${LIBXML2_LIBRARIES})
+diff --git a/libosmscout-import/src/osmscoutimport/GenCoordDat.cpp b/libosmscout-import/src/osmscoutimport/GenCoordDat.cpp
+index fe53ca52d..15c930e93 100644
+--- a/libosmscout-import/src/osmscoutimport/GenCoordDat.cpp
++++ b/libosmscout-import/src/osmscoutimport/GenCoordDat.cpp
+@@ -169,15 +169,8 @@ namespace osmscout {
+   private:
+     void SortCoordPage(std::vector<Id>& page)
+     {
+-#if defined(HAVE_STD_EXECUTION)
+-      std::sort(std::execution::par_unseq,
+-                    page.begin(),
+-                    page.end());
+-
+-#else
+       std::sort(page.begin(),
+                 page.end());
+-#endif
+     }
+ 
+     void ProcessingLoop() override
+@@ -414,17 +407,9 @@ namespace osmscout {
+   private:
+     static void SortCoordPage(std::vector<RawCoord>& page)
+     {
+-#if defined(HAVE_STD_EXECUTION)
+-      std::sort(std::execution::par_unseq,
+-                    page.begin(),
+-                    page.end(),
+-                    SortCoordsByOSMId);
+-
+-#else
+       std::sort(page.begin(),
+                 page.end(),
+                 SortCoordsByOSMId);
+-#endif
+     }
+ 
+     void ProcessingLoop() override
+diff --git a/libosmscout-import/src/osmscoutimport/GenOptimizeAreaWayIds.cpp b/libosmscout-import/src/osmscoutimport/GenOptimizeAreaWayIds.cpp
+index 387bc7539..6479cead1 100644
+--- a/libosmscout-import/src/osmscoutimport/GenOptimizeAreaWayIds.cpp
++++ b/libosmscout-import/src/osmscoutimport/GenOptimizeAreaWayIds.cpp
+@@ -440,22 +440,13 @@ namespace osmscout {
+ 
+     std::vector<bool> successes(processors.size(),false);
+ 
+-#if defined(HAVE_STD_EXECUTION)
+-    std::transform(std::execution::par_unseq,
+-                   processors.begin(),
+-                   processors.end(),
+-                   successes.begin(),
+-                   [](const ProcessorRef& processor) {
+-                     return (*processor)();
+-                   });
+-#else
+     std::transform(processors.begin(),
+                    processors.end(),
+                    successes.begin(),
+                    [](const ProcessorRef& processor) {
+                      return (*processor)();
+                    });
+-#endif
++
+     return std::accumulate(successes.begin(),
+                            successes.end(),
+                            true,
