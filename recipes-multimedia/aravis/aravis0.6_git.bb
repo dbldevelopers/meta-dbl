@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = ""
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI = "git://github.com/AravisProject/aravis;branch=aravis-0-6 \
+SRC_URI = "https://github.com/AravisProject/aravis;branch=aravis-0-6;protocol=https \
 	file://imperx_c2010_reg_read_write.patch \
 "
 
