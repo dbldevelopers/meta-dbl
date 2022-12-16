@@ -9,7 +9,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 inherit cmake_qt5 pkgconfig
 
 SRC_URI = " \
-	git://github.com/Framstag/libosmscout;branch=master;protocol=https \
+	git://github.com/Framstag/libosmscout;branch=master \
     file://0001-add-pkgconfig.patch \
     file://0002-glyph-draw-fix.patch \
     file://0003-qml-plugin.patch \
@@ -112,7 +112,7 @@ do_install:append() {
     install -m 0644 ${WORKDIR}/qmldir ${D}${OE_QMAKE_PATH_QML}/net/sf/libosmscout/map/
     ln -sf ${libdir}/libosmscout_client_qt.so.${PV} ${D}${OE_QMAKE_PATH_QML}/net/sf/libosmscout/map/libosmscout_client_qt.so
     
-    install -d ${D}/storage/maps/
+    install -d ${D}/data/maps/
     install -d ${D}${datadir}/stylesheets/
     install -d ${D}${datadir}/stylesheets/icons/
     install -m 0644 ${S}/stylesheets/* ${D}${datadir}/stylesheets/
@@ -138,7 +138,7 @@ INSANE_SKIP:${PN} += "dev-so"
 FILES:${PN} = " \
 	${bindir} \
 	${libdir}/*.so* \
-    /storage/maps/ \
+    /data/maps/ \
 	${datadir}/stylesheets/ \
     ${datadir}/stylesheets/icons/ \
 	${datadir}/${PN} \

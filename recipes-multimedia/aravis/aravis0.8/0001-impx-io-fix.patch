@@ -1,8 +1,8 @@
 diff --git a/src/arvgvdevice.c b/src/arvgvdevice.c
-index 153a815c..57943bde 100644
+index 782e8e9..a29bacb 100644
 --- a/src/arvgvdevice.c
 +++ b/src/arvgvdevice.c
-@@ -362,10 +362,20 @@ arv_gv_device_read_memory (ArvDevice *device, guint64 address, guint32 size, voi
+@@ -1205,10 +1205,20 @@ arv_gv_device_read_memory (ArvDevice *device, guint64 address, guint32 size, voi
  
  	for (i = 0; i < (size + ARV_GVCP_DATA_SIZE_MAX - 1) / ARV_GVCP_DATA_SIZE_MAX; i++) {
  		block_size = MIN (ARV_GVCP_DATA_SIZE_MAX, size - i * ARV_GVCP_DATA_SIZE_MAX);
@@ -27,7 +27,7 @@ index 153a815c..57943bde 100644
  	}
  
  	return TRUE;
-@@ -380,10 +390,18 @@ arv_gv_device_write_memory (ArvDevice *device, guint64 address, guint32 size, vo
+@@ -1223,10 +1233,18 @@ arv_gv_device_write_memory (ArvDevice *device, guint64 address, guint32 size, vo
  
  	for (i = 0; i < (size + ARV_GVCP_DATA_SIZE_MAX - 1) / ARV_GVCP_DATA_SIZE_MAX; i++) {
  		block_size = MIN (ARV_GVCP_DATA_SIZE_MAX, size - i * ARV_GVCP_DATA_SIZE_MAX);
