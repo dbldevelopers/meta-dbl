@@ -15,7 +15,7 @@ index 346bb5255..e1ab7c974 100644
 \ No newline at end of file
 diff --git a/libosmscout.pc.in b/libosmscout.pc.in
 new file mode 100644
-index 000000000..218ed7f25
+index 000000000..93d5665e0
 --- /dev/null
 +++ b/libosmscout.pc.in
 @@ -0,0 +1,15 @@
@@ -25,7 +25,7 @@ index 000000000..218ed7f25
 +includedir=${prefix}/include
 +
 +Name: libosmscout
-+Description: OpenstreetMap navigation library
++Description: OpenstreetMap maps
 +URL: http://libosmscout.sourceforge.net/
 +Version: 1.1.1
 +#Requires: glib-2.0 gobject-2.0 gstreamer-1.0 gstreamer-base-1.0 gstreamer-plugins-base-1.0

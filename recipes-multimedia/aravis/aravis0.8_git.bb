@@ -5,13 +5,13 @@ LIC_FILES_CHKSUM = ""
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI = "git://github.com/AravisProject/aravis;branch=main \
+SRC_URI = "git://github.com/AravisProject/aravis;branch=main;protocol=https \
 	file://0001-impx-io-fix.patch \
 	file://0002-priv-iodata-release-fix.patch \
 "
 
-PV = "2022.05.03-0.8.20"
-SRCREV = "6c57c65b55d467ffa9ef635162c5a60711289613"
+PV = "2022.07.13-0.8.22"
+SRCREV = "fe36369e0416fe22b3df0fd35e66918f7eea202c"
 
 inherit meson pkgconfig gettext 
 

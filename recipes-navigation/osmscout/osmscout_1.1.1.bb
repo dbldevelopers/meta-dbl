@@ -9,7 +9,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/{BPN}:"
 inherit cmake_qt5 pkgconfig
 
 SRC_URI = " \
-	git://github.com/Framstag/libosmscout;branch=master;protocol=https \
+    git://github.com/Framstag/libosmscout;branch=master;protocol=https \
     file://0001-disable-parallel-policies.patch \
     file://0002-add-pkgconfig-support.patch \
     file://0003-disable-debug-performance.patch \
@@ -18,7 +18,7 @@ SRC_URI = " \
 "  
 
 PV = "1.1.1"
-SRCREV = "79d0a2403a5d96d1f8e6e995289ac7f3383cefc3"
+SRCREV = "4f3da697f1b7a90ff0470ccc725d4822cd76830c"
 
 S = "${WORKDIR}/git"
 
@@ -40,23 +40,23 @@ def runtime_depends_for_static_libs_config(d):
                                 "qtmultimedia"]))
 
 DEPENDS = " \
-	qttools-native \
-	qtbase \
-	qtsvg \
-	qtlocation \
-	qtimageformats \
-	qtmultimedia \
-	${@depends_for_static_libs_config(d)} \
-	zlib \
-	lzip \
-	libxml2 \
+    qttools-native \
+    qtbase \
+    qtsvg \
+    qtlocation \
+    qtimageformats \
+    qtmultimedia \
+    ${@depends_for_static_libs_config(d)} \
+    zlib \
+    lzip \
+    libxml2 \
 "
 
 RDEPENDS:${PN} += " \
-	${@runtime_depends_for_static_libs_config(d)} \
-	zlib \
-	lzip \
-	libxml2 \
+    ${@runtime_depends_for_static_libs_config(d)} \
+    zlib \
+    lzip \
+    libxml2 \
 "
 
 EXTRA_OECMAKE:append = ' \
@@ -99,11 +99,9 @@ EXTRA_OECMAKE:append = ' \
 '
 
 do_install:append() {
-    install -d ${D}/storage/maps/
-    install -d ${D}${datadir}/stylesheets/
-    install -d ${D}${datadir}/stylesheets/icons/
-    install -m 0644 ${S}/stylesheets/* ${D}${datadir}/stylesheets/
-    install -m 0644 ${WORKDIR}/icons/* ${D}${datadir}/stylesheets/icons/
+    install -d ${D}${datadir}/osmscout/
+    install -d ${D}${datadir}/osmscout/icons/
+    install -m 0644 ${WORKDIR}/icons/* ${D}${datadir}/osmscout/icons/
 }
 
 do_patch:append() {
@@ -113,29 +111,28 @@ do_patch:append() {
 remove_qt_keywords() {
     find ${S}/libosmscout-client-qt/ -type f -name "*.h" -print0 | xargs -0 sed -i 's/signals/Q_SIGNALS/g'
     find ${S}/libosmscout-client-qt/ -type f -name "*.h" -print0 | xargs -0 sed -i 's/slots/Q_SLOTS/g'
-    find ${S}/libosmscout-client-qt/ -type f -name "*.h" -print0 | xargs -0 sed -i 's/emit/Q_EMIT/g'
+    find ${S}/libosmscout-client-qt/ -type f -name "*.h" -print0 | xargs -0 sed -i 's/emit /Q_EMIT /g'
 }
 
 INSANE_SKIP:${PN} += "dev-so"
 
 FILES:${PN} = " \
-	${bindir} \
-	${libdir}/*.so* \
-    /storage/maps/ \
-	${datadir}/stylesheets/ \
-    ${datadir}/stylesheets/icons/ \
-	${datadir}/${PN} \
+    ${bindir} \
+    ${libdir}/*.so* \
+    ${datadir}/osmscout/stylesheets/ \
+    ${datadir}/osmscout/icons/ \
+    ${datadir}/${PN} \
 "
 
 FILES:${PN}-dbg = " \ 
-	${bindir}/.debug \
-	${libdir}/.debug \
+    ${bindir}/.debug \
+    ${libdir}/.debug \
 "
 
 FILES:${PN}-dev = " \
-	${libdir}/pkgconfig/*.pc \
-	${includedir} \
-	${datadir}/cmake \
+    ${libdir}/pkgconfig/*.pc \
+    ${includedir} \
+    ${libdir}/cmake \
 "
 
 FILES:${PN}-staticdev = " \
