@@ -18,7 +18,7 @@ SRC_URI = " \
 "  
 
 PV = "1.1.1"
-SRCREV = "79d0a2403a5d96d1f8e6e995289ac7f3383cefc3"
+SRCREV = "4f3da697f1b7a90ff0470ccc725d4822cd76830c"
 
 S = "${WORKDIR}/git"
 
@@ -100,6 +100,8 @@ EXTRA_OECMAKE:append = ' \
 
 do_install:append() {
     install -d ${D}/storage/maps/
+    install -d ${D}/storage/maps/db/
+    install -d ${D}/storage/maps/world/
     install -d ${D}${datadir}/osmscout/
     install -d ${D}${datadir}/osmscout/icons/
     install -m 0644 ${WORKDIR}/icons/* ${D}${datadir}/osmscout/icons/
@@ -124,6 +126,8 @@ FILES:${PN} = " \
     ${datadir}/osmscout/icons/ \
     ${datadir}/${PN} \
     /storage/maps/ \
+    /storage/maps/db/ \
+    /storage/maps/world/ \
 "
 
 FILES:${PN}-dbg = " \ 
