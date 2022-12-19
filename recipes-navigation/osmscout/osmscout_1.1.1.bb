@@ -14,6 +14,7 @@ SRC_URI = " \
     file://0002-add-pkgconfig-support.patch \
     file://0003-disable-debug-performance.patch \
     file://0004-map-widget-correction.patch \
+    file://icons/ \
 "  
 
 PV = "1.1.1"
@@ -99,6 +100,9 @@ EXTRA_OECMAKE:append = ' \
 
 do_install:append() {
     install -d ${D}/storage/maps/
+    install -d ${D}${datadir}/osmscout/
+    install -d ${D}${datadir}/osmscout/icons/
+    install -m 0644 ${WORKDIR}/icons/* ${D}${datadir}/osmscout/icons/
 }
 
 do_patch:append() {
@@ -116,7 +120,8 @@ INSANE_SKIP:${PN} += "dev-so"
 FILES:${PN} = " \
     ${bindir} \
     ${libdir}/*.so* \
-    ${datadir}/stylesheets/ \
+    ${datadir}/osmscout/stylesheets/ \
+    ${datadir}/osmscout/icons/ \
     ${datadir}/${PN} \
     /storage/maps/ \
 "
