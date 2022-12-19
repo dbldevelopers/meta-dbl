@@ -102,7 +102,9 @@ do_install:append() {
     install -d ${D}/storage/maps/
     install -d ${D}${datadir}/stylesheets/
     install -d ${D}${datadir}/stylesheets/icons/
+    install -d ${D}${datadir}/stylesheets/include/
     install -m 0644 ${S}/stylesheets/* ${D}${datadir}/stylesheets/
+    install -m 0644 ${S}/stylesheets/include/* ${D}${datadir}/stylesheets/include/
     install -m 0644 ${WORKDIR}/icons/* ${D}${datadir}/stylesheets/icons/
 }
 
@@ -124,6 +126,7 @@ FILES:${PN} = " \
     /storage/maps/ \
 	${datadir}/stylesheets/ \
     ${datadir}/stylesheets/icons/ \
+    ${datadir}/stylesheets/include/* \
 	${datadir}/${PN} \
 "
 
