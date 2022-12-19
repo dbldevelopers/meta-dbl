@@ -99,9 +99,6 @@ EXTRA_OECMAKE:append = ' \
 '
 
 do_install:append() {
-    install -d ${D}/storage/maps/
-    install -d ${D}/storage/maps/db/
-    install -d ${D}/storage/maps/world/
     install -d ${D}${datadir}/osmscout/
     install -d ${D}${datadir}/osmscout/icons/
     install -m 0644 ${WORKDIR}/icons/* ${D}${datadir}/osmscout/icons/
@@ -125,9 +122,6 @@ FILES:${PN} = " \
     ${datadir}/osmscout/stylesheets/ \
     ${datadir}/osmscout/icons/ \
     ${datadir}/${PN} \
-    /storage/maps/ \
-    /storage/maps/db/ \
-    /storage/maps/world/ \
 "
 
 FILES:${PN}-dbg = " \ 
