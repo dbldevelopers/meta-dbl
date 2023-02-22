@@ -114,7 +114,7 @@ public:
         osmscout::OSMScoutQtBuilder builder = osmscout::OSMScoutQt::NewInstance();
 
         QStringList mapLookupDirectories;
-        mapLookupDirectories << "/data/maps";
+        mapLookupDirectories << "/storage/maps";
 
         builder
         .WithStyleSheetDirectory("/usr/share/stylesheets")
