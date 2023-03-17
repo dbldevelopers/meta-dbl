@@ -14,6 +14,8 @@ SRC_URI = " \
     file://0002-add-pkgconfig-support.patch \
     file://0003-disable-debug-performance.patch \
     file://0004-map-widget-correction.patch \
+    file://0005-osmscout-style.patch \
+    file://0006-remove-dbg-and-warning-messages.patch \
     file://icons/ \
 "  
 
