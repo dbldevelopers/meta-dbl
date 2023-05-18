@@ -6,7 +6,7 @@ The goal of SObjectizer is significant simplification of development of      \
 concurrent and multithreaded applications in C++."
 HOMEPAGE = "https://github.com/Stiffstream/sobjectizer"
 LICENSE = "sobjectizer"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=5495a75740338998788ccdbe7a1499fc"
+LIC_FILES_CHKSUM = "file://${WORKDIR}/so-${PV}/LICENSE;md5=5495a75740338998788ccdbe7a1499fc"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/{BPN}:"
 SRC_URI = "                                                                              \
