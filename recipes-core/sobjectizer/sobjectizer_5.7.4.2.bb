@@ -17,7 +17,7 @@ UPSTREAM_CHECK_URI = "https://github.com/Stiffstream/sobjectizer/releases"
 
 inherit cmake pkgconfig
 
-S = "${WORKDIR}/so-${PV}"
+S = "${WORKDIR}/so-${PV}/dev"
 
 SRC_URI[md5sum] = "111c17ce68d21bab25058d6c3984a015"
 SRC_URI[sha256sum] = "503982b18ba6bb60c5bd0b5bc705e8c3c050b3c28733f5f056f288f321b6fa36"
