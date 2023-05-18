@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=5495a75740338998788ccdbe7a1499fc"
 FILESEXTRAPATHS:prepend := "${THISDIR}/{BPN}:"
 SRC_URI = " 																			 \
 	https://github.com/Stiffstream/sobjectizer/releases/download/v.${PV}/so-${PV}.tar.gz \
-	file://0001-pkg-config-support.patch 												 \
+	file://0001-pkg-config-support.patch;patchdir=${WORKDIR}/so-${PV}					 \
 "
 UPSTREAM_CHECK_URI = "https://github.com/Stiffstream/sobjectizer/releases"
 
