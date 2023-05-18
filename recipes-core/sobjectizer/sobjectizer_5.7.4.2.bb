@@ -5,8 +5,8 @@ but also Publish-Subscribe Model and CSP-like channels. 					 \
 The goal of SObjectizer is significant simplification of development of 	 \
 concurrent and multithreaded applications in C++."
 HOMEPAGE = "https://github.com/Stiffstream/sobjectizer"
-LICENSE = "Unlicense"
-LIC_FILES_CHKSUM = "file://COPYING;md5=75605e6bdd564791ab698fca65c94a4f"
+LICENSE = "sobjectizer"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=5495a75740338998788ccdbe7a1499fc"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/{BPN}:"
 SRC_URI = " 																			 \
