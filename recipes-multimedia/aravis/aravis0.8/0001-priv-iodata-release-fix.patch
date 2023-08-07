@@ -1,0 +1,12 @@
+diff --git a/src/arvgvdevice.c b/src/arvgvdevice.c
+index 4d94bcc1..7a93c6b0 100644
+--- a/src/arvgvdevice.c
++++ b/src/arvgvdevice.c
+@@ -1987,6 +1987,7 @@ arv_gv_device_constructed (GObject *object)
+ 
+ 	g_mutex_init (&io_data->mutex);
+ 
++        priv->io_data = io_data;
+ 	io_data->packet_id = 65300; /* Start near the end of the circular counter */
+ 
+ 	io_data->interface_address = g_inet_socket_address_new (priv->interface_address, 0);

@@ -5,7 +5,9 @@ LIC_FILES_CHKSUM = ""
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI = "git://github.com/AravisProject/aravis;branch=main;protocol=https"
+SRC_URI = "git://github.com/AravisProject/aravis;branch=main;protocol=https \
+	file://0001-priv-iodata-release-fix.patch \
+"
 
 PV = "2023.06.09-0.8.27"
 SRCREV = "f7a110c1c9726945bfebbefb1b65b050ce717f11"
