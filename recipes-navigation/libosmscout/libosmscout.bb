@@ -9,7 +9,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 inherit cmake_qt5 pkgconfig
 
 SRC_URI = " \
-	git://github.com/Framstag/libosmscout;branch=master \
+	git://github.com/Framstag/libosmscout;branch=master;protocol=https \
     file://0001-add-pkgconfig.patch \
     file://0002-glyph-draw-fix.patch \
     file://0003-qml-plugin.patch \

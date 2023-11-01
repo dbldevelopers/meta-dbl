@@ -10,15 +10,13 @@ inherit cmake_qt5 pkgconfig
 
 SRC_URI = " \
     git://github.com/Framstag/libosmscout;branch=master;protocol=https \
-    file://0001-disable-parallel-policies.patch \
-    file://0002-add-pkgconfig-support.patch \
-    file://0003-disable-debug-performance.patch \
-    file://0004-map-widget-correction.patch \
+    file://0001-map-widget-correction.patch \
+    file://0002-osmscout-style.patch \
     file://icons/ \
 "  
 
-PV = "1.1.1"
-SRCREV = "4f3da697f1b7a90ff0470ccc725d4822cd76830c"
+PV = "1.1.1-23.10.23"
+SRCREV = "d82b2ae2f146f189bf826ca8501df077581e804d"
 
 S = "${WORKDIR}/git"
 
@@ -40,6 +38,7 @@ def runtime_depends_for_static_libs_config(d):
                                 "qtmultimedia"]))
 
 DEPENDS = " \
+    qttools \
     qttools-native \
     qtbase \
     qtsvg \
@@ -50,6 +49,8 @@ DEPENDS = " \
     zlib \
     lzip \
     libxml2 \
+    protobuf \
+    protobuf-native \
 "
 
 RDEPENDS:${PN} += " \
@@ -60,42 +61,42 @@ RDEPENDS:${PN} += " \
 "
 
 EXTRA_OECMAKE:append = ' \
-                         -DOSMSCOUT_BUILD_QT=ON \
-                         -DBUILD_SHARED_LIBS=ON \
-                         -DOSMSCOUT_BUILD_CLIENT_QT=ON \
-                         -DOSMSCOUT_BUILD_DEMOS=OFF \
-                         -DOSMSCOUT_BUILD_DOC_API=OFF \
-                         -DOSMSCOUT_BUILD_EXTERN_MATLAB=OFF \
-                         -DOSMSCOUT_BUILD_GPX=ON \
-                         -DOSMSCOUT_BUILD_IMPORT_TOOL_FOR_DISTRIBUTION=OFF \
-                         -DOSMSCOUT_BUILD_MAP_AGG=OFF \
-                         -DOSMSCOUT_BUILD_MAP_CAIRO=OFF \
-                         -DOSMSCOUT_BUILD_MAP_OPENGL=OFF \
-                         -DOSMSCOUT_BUILD_MAP_SVG=ON \
-                         -DOSMSCOUT_BUILD_OPENGL=OFF \
-                         -DOSMSCOUT_BUILD_SVG=OFF \
-                         -DOSMSCOUT_BUILD_WEBPAGE=OFF \
-                         -DOSMSCOUT_BUILD_WITH_OPENMP=ON \
-                         -DOSMSCOUT_DEBUG_COASTLINE=OFF \
-                         -DOSMSCOUT_DEBUG_GROUNDTILES=OFF \
-                         -DOSMSCOUT_DEBUG_LABEL_LAYOUTER=OFF \
-                         -DOSMSCOUT_DEBUG_ROUTING=OFF \
-                         -DOSMSCOUT_DEBUG_TILING=OFF \
-                         -DOSMSCOUT_ENABLE_SSE=OFF \
-                         -DOSMSCOUT_BUILD_TESTS=OFF \
-                         -DOSMSCOUT_BUILD_TOOL_DUMPDATA=OFF \
-                         -DOSMSCOUT_BUILD_IMPORT=OFF \
-                         -DOSMSCOUT_BUILD_TOOL_IMPORT=OFF \
-                         -DOSMSCOUT_BUILD_OSMSCOUT2=OFF \
-                         -DOSMSCOUT_BUILD_TOOL_OSMSCOUT2=OFF \
-                         -DOSMSCOUT_BUILD_OSMSCOUTOPENGL=OFF \
-                         -DOSMSCOUT_BUILD_TOOL_OSMSCOUTOPENGL=OFF \
-                         -DOSMSCOUT_BUILD_PUBLICTRANSPORTMAP=OFF \
-                         -DOSMSCOUT_BUILD_TOOL_PUBLICTRANSPORTMAP=OFF \
-                         -DOSMSCOUT_BUILD_TOOL_STYLEEDITOR=OFF \
-                         -DOSMSCOUT_BUILD_STYLEEDITOR=OFF \
-                         -DCMAKE_VERBOSE_MAKEFILE=ON \
-                         -DCMAKE_BUILD_TYPE=Release \
+    -DOSMSCOUT_BUILD_QT=ON \
+    -DBUILD_SHARED_LIBS=ON \
+    -DOSMSCOUT_BUILD_CLIENT_QT=ON \
+    -DOSMSCOUT_BUILD_DEMOS=OFF \
+    -DOSMSCOUT_BUILD_DOC_API=OFF \
+    -DOSMSCOUT_BUILD_EXTERN_MATLAB=OFF \
+    -DOSMSCOUT_BUILD_GPX=ON \
+    -DOSMSCOUT_BUILD_IMPORT_TOOL_FOR_DISTRIBUTION=OFF \
+    -DOSMSCOUT_BUILD_MAP_AGG=OFF \
+    -DOSMSCOUT_BUILD_MAP_CAIRO=OFF \
+    -DOSMSCOUT_BUILD_MAP_OPENGL=OFF \
+    -DOSMSCOUT_BUILD_MAP_SVG=ON \
+    -DOSMSCOUT_BUILD_OPENGL=OFF \
+    -DOSMSCOUT_BUILD_SVG=OFF \
+    -DOSMSCOUT_BUILD_WEBPAGE=OFF \
+    -DOSMSCOUT_BUILD_WITH_OPENMP=ON \
+    -DOSMSCOUT_DEBUG_COASTLINE=OFF \
+    -DOSMSCOUT_DEBUG_GROUNDTILES=OFF \
+    -DOSMSCOUT_DEBUG_LABEL_LAYOUTER=OFF \
+    -DOSMSCOUT_DEBUG_ROUTING=OFF \
+    -DOSMSCOUT_DEBUG_TILING=OFF \
+    -DOSMSCOUT_ENABLE_SSE=ON \
+    -DOSMSCOUT_BUILD_TESTS=OFF \
+    -DOSMSCOUT_BUILD_TOOL_DUMPDATA=OFF \
+    -DOSMSCOUT_BUILD_IMPORT=OFF \
+    -DOSMSCOUT_BUILD_TOOL_IMPORT=OFF \
+    -DOSMSCOUT_BUILD_OSMSCOUT2=OFF \
+    -DOSMSCOUT_BUILD_TOOL_OSMSCOUT2=OFF \
+    -DOSMSCOUT_BUILD_OSMSCOUTOPENGL=OFF \
+    -DOSMSCOUT_BUILD_TOOL_OSMSCOUTOPENGL=OFF \
+    -DOSMSCOUT_BUILD_PUBLICTRANSPORTMAP=OFF \
+    -DOSMSCOUT_BUILD_TOOL_PUBLICTRANSPORTMAP=OFF \
+    -DOSMSCOUT_BUILD_TOOL_STYLEEDITOR=OFF \
+    -DOSMSCOUT_BUILD_STYLEEDITOR=OFF \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
+    -DCMAKE_BUILD_TYPE=Release \
 '
 
 do_install:append() {

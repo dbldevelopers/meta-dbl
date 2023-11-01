@@ -1,0 +1,24 @@
+diff --git a/stylesheets/standard.oss b/stylesheets/standard.oss
+index a502523a0..bfaac3865 100644
+--- a/stylesheets/standard.oss
++++ b/stylesheets/standard.oss
+@@ -382,8 +382,8 @@ STYLE
+ 
+     // [TYPE _tile_coastline] WAY {color: #ff0000; displayWidth: 0.1mm;}
+ 
+-    //[TYPE boundary_country] WAY {color: @countryBorderColor; displayWidth: 0.4mm; dash: 7,3;}
+-    //[TYPE boundary_country] AREA.BORDER {color: @countryBorderColor; width: 0.4mm; dash: 7,3;}
++    [TYPE boundary_country] WAY {color: @countryBorderColor; displayWidth: 0.4mm; dash: 7,3;}
++    [TYPE boundary_country] AREA.BORDER {color: @countryBorderColor; width: 0.4mm; dash: 7,3;}
+   }
+ 
+   // -------------------------------------------------------
+@@ -510,7 +510,7 @@ STYLE
+ 
+     }
+ 
+-    [MAG suburb-] {
++    [MAG region-] {
+       [TYPE waterway_dock,
+             waterway_riverbank] AREA { color: @waterColor; }
+ 
