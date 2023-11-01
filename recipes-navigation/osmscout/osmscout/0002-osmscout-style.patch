@@ -1,7 +1,5 @@
 diff --git a/stylesheets/standard.oss b/stylesheets/standard.oss
-old mode 100644
-new mode 100755
-index a502523a0..bfaac3865
+index a502523a0..bfaac3865 100644
 --- a/stylesheets/standard.oss
 +++ b/stylesheets/standard.oss
 @@ -382,8 +382,8 @@ STYLE
