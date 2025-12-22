@@ -1,0 +1,21 @@
+diff --git a/libosmscout-map-qt/src/osmscoutmapqt/MapPainterQt.cpp b/libosmscout-map-qt/src/osmscoutmapqt/MapPainterQt.cpp
+index 148fa194a..c84c296a3 100644
+--- a/libosmscout-map-qt/src/osmscoutmapqt/MapPainterQt.cpp
++++ b/libosmscout-map-qt/src/osmscoutmapqt/MapPainterQt.cpp
+@@ -931,7 +931,14 @@ namespace osmscout {
+ 
+     painter->setTransform(tran);
+ 
+-    painter->drawGlyphRun(QPointF(0,0), glyph.glyph);
++    //painter->drawGlyphRun(QPointF(0,0), glyph.glyph);
++    const QRawFont &rawFont = glyph.glyph.rawFont();
++    QVector<quint32> indexes = glyph.glyph.glyphIndexes();
++    for(int i = 0; i < indexes.count(); i++) {
++        QPainterPath path = rawFont.pathForGlyph(indexes[i]);
++        //painter->translate(QPointF(0, 0));
++        painter->fillPath(path, painter->pen().brush());
++    }
+ 
+     painter->setTransform(originalTran);
+   }
+

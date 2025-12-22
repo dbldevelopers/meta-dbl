@@ -1,0 +1,15 @@
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/MapWidget.cpp b/libosmscout-client-qt/src/osmscoutclientqt/MapWidget.cpp
+index d032f0e7f..f7e6024f8 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/MapWidget.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/MapWidget.cpp
+@@ -32,8 +32,8 @@ namespace osmscout {
+ 
+ #define TMP_SUFFIX ".tmp"
+ 
+-//! We rotate in 16 steps
+-static double DELTA_ANGLE=2*M_PI/16.0;
++//! We rotate in 32 steps
++static double DELTA_ANGLE=2*M_PI/32.0;
+ 
+ MapWidget::MapWidget(QQuickItem* parent)
+     : QQuickPaintedItem(parent)

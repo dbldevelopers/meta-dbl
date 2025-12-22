@@ -1,0 +1,4 @@
+module net.sf.libosmscout.map
+plugin osmscout_client_qt
+classname OsmScoutQmlPlugin
+typeinfo plugins.qmltypes

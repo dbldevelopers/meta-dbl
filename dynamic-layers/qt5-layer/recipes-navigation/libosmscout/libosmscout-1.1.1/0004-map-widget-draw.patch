@@ -1,0 +1,84 @@
+diff --git a/libosmscout-client-qt/src/osmscout/MapWidget.cpp b/libosmscout-client-qt/src/osmscout/MapWidget.cpp
+index d199e58a2..8c7b282e1 100644
+--- a/libosmscout-client-qt/src/osmscout/MapWidget.cpp
++++ b/libosmscout-client-qt/src/osmscout/MapWidget.cpp
+@@ -32,8 +32,8 @@ namespace osmscout {
+ 
+ #define TMP_SUFFIX ".tmp"
+ 
+-//! We rotate in 16 steps
+-static double DELTA_ANGLE=2*M_PI/16.0;
++//! We rotate in 32 steps
++static double DELTA_ANGLE=2*M_PI/32.0;
+ 
+ MapWidget::MapWidget(QQuickItem* parent)
+     : QQuickPaintedItem(parent)
+@@ -41,7 +41,7 @@ MapWidget::MapWidget(QQuickItem* parent)
+     setOpaquePainting(true);
+     setAcceptedMouseButtons(Qt::LeftButton);
+     setAcceptHoverEvents(true);
+-
++    setAntialiasing(true);
+     renderer = OSMScoutQt::GetInstance().MakeMapRenderer(renderingType);
+     auto settings=OSMScoutQt::GetInstance().GetSettings();
+ 
+@@ -298,6 +298,18 @@ void MapWidget::paint(QPainter *painter)
+       painter->restore();
+     }
+ 
++    static QBrush outdatedSpotBrush2 = QBrush(QColor::fromRgbF(0.5, 0.5, 0.5, 1.0));
++    static QBrush outdatedSpotBrush3 = QBrush(QColor::fromRgbF(1.0, 1.0, 1.0, 1.0));
++    static QBrush spotBrush1 = QBrush(QColor::fromRgbF(0.0, 1.0, 0.0, 1.0));
++    static QBrush spotBrush2 = QBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 1.0));
++    static QBrush spotBrush3 = QBrush(QColor::fromRgbF(1.0, 1.0, 0.0, 1.0));
++    static QPen innerSpotPen = QColor::fromRgbF(0.0, 0.0, 0.0, 0.0);
++    static QPen spotPen = QColor::fromRgbF(0.0, 0.0, 0.0, 1.0);
++    spotPen.setWidth(0);
++
++    static QBrush accuracyCircleBrush = QBrush(QColor::fromRgbF(1.0, 1.0, 1.0, 0.4));
++    static QColor accuracyCirclePenColor = QColor::fromRgbF(1.0, 1.0, 1.0, 0.7);
++
+     // render current position spot
+     if (showCurrentPosition && currentPosition.valid){
+         double x;
+@@ -308,22 +320,28 @@ void MapWidget::paint(QPainter *painter)
+             if (currentPosition.horizontalAccuracyValid){
+                 double diameter = currentPosition.horizontalAccuracy * projection.GetMeterInPixel();
+                 if (diameter > 25.0 && diameter < std::max(request.width, request.height)){
+-                    painter->setBrush(QBrush(QColor::fromRgbF(1.0, 1.0, 1.0, 0.4)));
+-                    painter->setPen(QColor::fromRgbF(1.0, 1.0, 1.0, 0.7));
++                    painter->setBrush(accuracyCircleBrush);
++                    painter->setPen(accuracyCirclePenColor);
+                     painter->drawEllipse(x - (diameter /2.0), y - (diameter /2.0), diameter, diameter);
+                 }
+             }
+ 
+-            if (currentPosition.lastUpdate.secsTo(QDateTime::currentDateTime()) > 60) {
+-                // outdated, use greyed green
+-                painter->setBrush(QBrush(QColor::fromRgb(0x73, 0x8d, 0x73, 0x99)));
+-            }else{
+-                // updated, use green
+-                painter->setBrush(QBrush(QColor::fromRgb(0, 0xff, 0, 0x99)));
+-            }
+-            painter->setPen(QColor::fromRgbF(0.0, 0.5, 0.0, 0.9));
+-            double dimension = projection.ConvertWidthToPixel(2.8);
+-            painter->drawEllipse(x - dimension/2, y - dimension/2, dimension, dimension);
++            painter->setPen(spotPen);
++            painter->setBrush(spotBrush1);
++            double dimension = projection.ConvertWidthToPixel(3.2);
++            painter->drawEllipse(QRectF(x - dimension/2, y - dimension/2, dimension, dimension));
++
++            bool outdated = currentPosition.lastUpdate.secsTo(QDateTime::currentDateTime()) > 120;
++
++            painter->setBrush(outdated ? outdatedSpotBrush2 : spotBrush2);
++            painter->setPen(innerSpotPen);
++            dimension *= 0.6666;
++            painter->drawEllipse(QRectF(x - dimension/2, y - dimension/2, dimension, dimension));
++
++            painter->setBrush(outdated ? outdatedSpotBrush3 : spotBrush3);
++            painter->setPen(innerSpotPen);
++            dimension *= 0.3333;
++            painter->drawEllipse(QRectF(x - dimension/2, y - dimension/2, dimension, dimension));
+         }
+     }
+ 

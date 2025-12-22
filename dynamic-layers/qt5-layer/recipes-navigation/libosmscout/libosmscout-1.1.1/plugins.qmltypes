@@ -1,0 +1,1734 @@
+import QtQuick.tooling 1.2
+
+Module {
+    dependencies: ["QtQuick 2.0"]
+    Component {
+        name: "QAbstractItemModel"
+        prototype: "QObject"
+        Enum {
+            name: "LayoutChangeHint"
+            values: {
+                "NoLayoutChangeHint": 0,
+                "VerticalSortHint": 1,
+                "HorizontalSortHint": 2
+            }
+        }
+        Enum {
+            name: "CheckIndexOption"
+            values: {
+                "NoOption": 0,
+                "IndexIsValid": 1,
+                "DoNotUseParent": 2,
+                "ParentIsInvalid": 4
+            }
+        }
+        Signal {
+            name: "dataChanged"
+            Parameter { name: "topLeft"; type: "QModelIndex" }
+            Parameter { name: "bottomRight"; type: "QModelIndex" }
+            Parameter { name: "roles"; type: "QVector<int>" }
+        }
+        Signal {
+            name: "dataChanged"
+            Parameter { name: "topLeft"; type: "QModelIndex" }
+            Parameter { name: "bottomRight"; type: "QModelIndex" }
+        }
+        Signal {
+            name: "headerDataChanged"
+            Parameter { name: "orientation"; type: "Qt::Orientation" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "layoutChanged"
+            Parameter { name: "parents"; type: "QList<QPersistentModelIndex>" }
+            Parameter { name: "hint"; type: "QAbstractItemModel::LayoutChangeHint" }
+        }
+        Signal {
+            name: "layoutChanged"
+            Parameter { name: "parents"; type: "QList<QPersistentModelIndex>" }
+        }
+        Signal { name: "layoutChanged" }
+        Signal {
+            name: "layoutAboutToBeChanged"
+            Parameter { name: "parents"; type: "QList<QPersistentModelIndex>" }
+            Parameter { name: "hint"; type: "QAbstractItemModel::LayoutChangeHint" }
+        }
+        Signal {
+            name: "layoutAboutToBeChanged"
+            Parameter { name: "parents"; type: "QList<QPersistentModelIndex>" }
+        }
+        Signal { name: "layoutAboutToBeChanged" }
+        Signal {
+            name: "rowsAboutToBeInserted"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "rowsInserted"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "rowsAboutToBeRemoved"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "rowsRemoved"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "columnsAboutToBeInserted"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "columnsInserted"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "columnsAboutToBeRemoved"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal {
+            name: "columnsRemoved"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "first"; type: "int" }
+            Parameter { name: "last"; type: "int" }
+        }
+        Signal { name: "modelAboutToBeReset" }
+        Signal { name: "modelReset" }
+        Signal {
+            name: "rowsAboutToBeMoved"
+            Parameter { name: "sourceParent"; type: "QModelIndex" }
+            Parameter { name: "sourceStart"; type: "int" }
+            Parameter { name: "sourceEnd"; type: "int" }
+            Parameter { name: "destinationParent"; type: "QModelIndex" }
+            Parameter { name: "destinationRow"; type: "int" }
+        }
+        Signal {
+            name: "rowsMoved"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "start"; type: "int" }
+            Parameter { name: "end"; type: "int" }
+            Parameter { name: "destination"; type: "QModelIndex" }
+            Parameter { name: "row"; type: "int" }
+        }
+        Signal {
+            name: "columnsAboutToBeMoved"
+            Parameter { name: "sourceParent"; type: "QModelIndex" }
+            Parameter { name: "sourceStart"; type: "int" }
+            Parameter { name: "sourceEnd"; type: "int" }
+            Parameter { name: "destinationParent"; type: "QModelIndex" }
+            Parameter { name: "destinationColumn"; type: "int" }
+        }
+        Signal {
+            name: "columnsMoved"
+            Parameter { name: "parent"; type: "QModelIndex" }
+            Parameter { name: "start"; type: "int" }
+            Parameter { name: "end"; type: "int" }
+            Parameter { name: "destination"; type: "QModelIndex" }
+            Parameter { name: "column"; type: "int" }
+        }
+        Method { name: "submit"; type: "bool" }
+        Method { name: "revert" }
+        Method {
+            name: "hasIndex"
+            type: "bool"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "column"; type: "int" }
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method {
+            name: "hasIndex"
+            type: "bool"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "column"; type: "int" }
+        }
+        Method {
+            name: "index"
+            type: "QModelIndex"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "column"; type: "int" }
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method {
+            name: "index"
+            type: "QModelIndex"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "column"; type: "int" }
+        }
+        Method {
+            name: "parent"
+            type: "QModelIndex"
+            Parameter { name: "child"; type: "QModelIndex" }
+        }
+        Method {
+            name: "sibling"
+            type: "QModelIndex"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "column"; type: "int" }
+            Parameter { name: "idx"; type: "QModelIndex" }
+        }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "columnCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "columnCount"; type: "int" }
+        Method {
+            name: "hasChildren"
+            type: "bool"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "hasChildren"; type: "bool" }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "setData"
+            type: "bool"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "value"; type: "QVariant" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "setData"
+            type: "bool"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "value"; type: "QVariant" }
+        }
+        Method {
+            name: "headerData"
+            type: "QVariant"
+            Parameter { name: "section"; type: "int" }
+            Parameter { name: "orientation"; type: "Qt::Orientation" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "headerData"
+            type: "QVariant"
+            Parameter { name: "section"; type: "int" }
+            Parameter { name: "orientation"; type: "Qt::Orientation" }
+        }
+        Method {
+            name: "fetchMore"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method {
+            name: "canFetchMore"
+            type: "bool"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "match"
+            type: "QModelIndexList"
+            Parameter { name: "start"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+            Parameter { name: "value"; type: "QVariant" }
+            Parameter { name: "hits"; type: "int" }
+            Parameter { name: "flags"; type: "Qt::MatchFlags" }
+        }
+        Method {
+            name: "match"
+            type: "QModelIndexList"
+            Parameter { name: "start"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+            Parameter { name: "value"; type: "QVariant" }
+            Parameter { name: "hits"; type: "int" }
+        }
+        Method {
+            name: "match"
+            type: "QModelIndexList"
+            Parameter { name: "start"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+            Parameter { name: "value"; type: "QVariant" }
+        }
+    }
+    Component { name: "QAbstractListModel"; prototype: "QAbstractItemModel" }
+    Component {
+        name: "osmscout::AvailableMapsModel"
+        prototype: "QAbstractItemModel"
+        exports: ["net.sf.libosmscout.map/AvailableMapsModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "NameRole": 256,
+                "PathRole": 257,
+                "DirRole": 258,
+                "ServerDirectoryRole": 259,
+                "TimeRole": 260,
+                "VersionRole": 261,
+                "ByteSizeRole": 262,
+                "ProviderUriRole": 263,
+                "DescriptionRole": 264,
+                "SizeRole": 265,
+                "MapRole": 266
+            }
+        }
+        Property { name: "loading"; type: "bool"; isReadonly: true }
+        Property { name: "fetchError"; type: "string"; isReadonly: true }
+        Method {
+            name: "listDownloaded"
+            Parameter { name: "provider"; type: "MapProvider" }
+            Parameter { type: "QNetworkReply"; isPointer: true }
+        }
+        Method { name: "reload" }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "columnCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "columnCount"; type: "int" }
+        Method {
+            name: "index"
+            type: "QModelIndex"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "column"; type: "int" }
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method {
+            name: "index"
+            type: "QModelIndex"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "column"; type: "int" }
+        }
+        Method {
+            name: "index"
+            type: "QModelIndex"
+            Parameter { name: "row"; type: "int" }
+        }
+        Method {
+            name: "parent"
+            type: "QModelIndex"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "map"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "timeOfMap"
+            type: "QVariant"
+            Parameter { name: "path"; type: "QStringList" }
+        }
+        Method {
+            name: "mapByPath"
+            type: "QObject*"
+            Parameter { name: "path"; type: "QStringList" }
+        }
+    }
+    Component {
+        name: "osmscout::AvailableVoicesModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/AvailableVoicesModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "NameRole": 256,
+                "LangRole": 257,
+                "GenderRole": 258,
+                "LicenseRole": 259,
+                "DirectoryRole": 260,
+                "AuthorRole": 261,
+                "DescriptionRole": 262,
+                "StateRole": 263
+            }
+        }
+        Enum {
+            name: "VoiceState"
+            values: {
+                "Available": 0,
+                "Downloading": 1,
+                "Downloaded": 2
+            }
+        }
+        Property { name: "loading"; type: "bool"; isReadonly: true }
+        Property { name: "fetchError"; type: "string"; isReadonly: true }
+        Method {
+            name: "listDownloaded"
+            Parameter { name: "provider"; type: "VoiceProvider" }
+            Parameter { type: "QNetworkReply"; isPointer: true }
+        }
+        Method { name: "reload" }
+        Method {
+            name: "onVoiceStateChanged"
+            Parameter { name: "voice"; type: "AvailableVoice" }
+        }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "download"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "remove"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "stateStr"
+            type: "string"
+            Parameter { name: "state"; type: "VoiceState" }
+        }
+    }
+    Component {
+        name: "osmscout::ElevationChartWidget"
+        defaultProperty: "data"
+        prototype: "QQuickPaintedItem"
+        exports: ["net.sf.libosmscout.map/ElevationChart 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "way"; type: "QObject"; isPointer: true }
+        Property { name: "loading"; type: "bool"; isReadonly: true }
+        Property { name: "lineColor"; type: "QColor" }
+        Property { name: "lineWidth"; type: "double" }
+        Property { name: "gradientTopColor"; type: "QColor" }
+        Property { name: "gradientBottomColor"; type: "QColor" }
+        Property { name: "textColor"; type: "QColor" }
+        Property { name: "textPixelSize"; type: "int" }
+        Property { name: "textPadding"; type: "int" }
+        Property { name: "pointCount"; type: "qlonglong"; isReadonly: true }
+        Property { name: "lowestElevation"; type: "double"; isReadonly: true }
+        Property { name: "highestElevation"; type: "double"; isReadonly: true }
+        Property { name: "ascent"; type: "double"; isReadonly: true }
+        Property { name: "descent"; type: "double"; isReadonly: true }
+        Signal {
+            name: "elevationProfileRequest"
+            Parameter { name: "way"; type: "std::shared_ptr<OverlayWay>" }
+            Parameter { name: "requestId"; type: "int" }
+            Parameter { name: "breaker"; type: "osmscout::BreakerRef" }
+        }
+        Signal { name: "pointsUpdated" }
+        Method {
+            name: "onError"
+            Parameter { name: "requestId"; type: "int" }
+        }
+        Method {
+            name: "onElevationProfileAppend"
+            Parameter { name: "points"; type: "ElevationModule::ElevationPoints" }
+            Parameter { name: "requestId"; type: "int" }
+        }
+        Method {
+            name: "onLoadingFinished"
+            Parameter { name: "requestId"; type: "int" }
+        }
+    }
+    Component {
+        name: "osmscout::InstalledMapsModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/InstalledMapsModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "NameRole": 256,
+                "PathRole": 257,
+                "DirectoryRole": 258,
+                "TimeRole": 259
+            }
+        }
+        Signal { name: "databaseListChanged" }
+        Method { name: "onDatabaseListChanged" }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "deleteMap"
+            type: "bool"
+            Parameter { name: "row"; type: "int" }
+        }
+        Method {
+            name: "removeRows"
+            type: "bool"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "count"; type: "int" }
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method {
+            name: "removeRows"
+            type: "bool"
+            Parameter { name: "row"; type: "int" }
+            Parameter { name: "count"; type: "int" }
+        }
+        Method {
+            name: "timeOfMap"
+            type: "QVariant"
+            Parameter { name: "path"; type: "QStringList" }
+        }
+    }
+    Component {
+        name: "osmscout::InstalledVoicesModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/InstalledVoicesModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "NameRole": 256,
+                "LangRole": 257,
+                "GenderRole": 258,
+                "ValidRole": 259,
+                "LicenseRole": 260,
+                "AuthorRole": 261,
+                "DescriptionRole": 262,
+                "SelectedRole": 263
+            }
+        }
+        Signal {
+            name: "voiceChanged"
+            Parameter { type: "string" }
+        }
+        Method { name: "update" }
+        Method {
+            name: "onVoiceChanged"
+            Parameter { type: "string" }
+        }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "select"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "playSample"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "sample"; type: "QStringList" }
+        }
+    }
+    Component {
+        name: "osmscout::LocationEntry"
+        prototype: "QObject"
+        exports: ["net.sf.libosmscout.map/LocationEntry 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "label"; type: "string"; isReadonly: true }
+        Property { name: "type"; type: "string"; isReadonly: true }
+        Property { name: "objectType"; type: "string"; isReadonly: true }
+        Property { name: "lat"; type: "double"; isReadonly: true }
+        Property { name: "lon"; type: "double"; isReadonly: true }
+        Method {
+            name: "distanceTo"
+            type: "double"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+    }
+    Component {
+        name: "osmscout::LocationInfoModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/LocationInfoModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "LabelRole": 256,
+                "RegionRole": 257,
+                "AddressRole": 258,
+                "InPlaceRole": 259,
+                "DistanceRole": 260,
+                "BearingRole": 261,
+                "PoiRole": 262,
+                "TypeRole": 263,
+                "PostalCodeRole": 264,
+                "WebsiteRole": 265,
+                "PhoneRole": 266,
+                "AddressLocationRole": 267,
+                "AddressNumberRole": 268
+            }
+        }
+        Property { name: "ready"; type: "bool"; isReadonly: true }
+        Signal {
+            name: "locationDescriptionRequested"
+            Parameter { name: "location"; type: "osmscout::GeoCoord" }
+        }
+        Signal {
+            name: "readyChange"
+            Parameter { name: "ready"; type: "bool" }
+        }
+        Signal {
+            name: "regionLookupRequested"
+            Parameter { type: "osmscout::GeoCoord" }
+        }
+        Method {
+            name: "setLocation"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Method {
+            name: "dbInitialized"
+            Parameter { type: "DatabaseLoadedResponse" }
+        }
+        Method {
+            name: "onLocationDescription"
+            Parameter { name: "location"; type: "osmscout::GeoCoord" }
+            Parameter { name: "database"; type: "string" }
+            Parameter { name: "description"; type: "osmscout::LocationDescription" }
+            Parameter { name: "regions"; type: "QStringList" }
+        }
+        Method {
+            name: "onLocationDescriptionFinished"
+            Parameter { type: "osmscout::GeoCoord" }
+        }
+        Method {
+            name: "onLocationAdminRegions"
+            Parameter { type: "osmscout::GeoCoord" }
+            Parameter { type: "QList<AdminRegionInfoRef>" }
+        }
+        Method {
+            name: "onLocationAdminRegionFinished"
+            Parameter { type: "osmscout::GeoCoord" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "distance"
+            type: "double"
+            Parameter { name: "lat1"; type: "double" }
+            Parameter { name: "lon1"; type: "double" }
+            Parameter { name: "lat2"; type: "double" }
+            Parameter { name: "lon2"; type: "double" }
+        }
+        Method {
+            name: "bearing"
+            type: "string"
+            Parameter { name: "lat1"; type: "double" }
+            Parameter { name: "lon1"; type: "double" }
+            Parameter { name: "lat2"; type: "double" }
+            Parameter { name: "lon2"; type: "double" }
+        }
+    }
+    Component {
+        name: "osmscout::LocationListModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/LocationListModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "count"; type: "int"; isReadonly: true }
+        Property { name: "searching"; type: "bool"; isReadonly: true }
+        Property { name: "lat"; type: "double" }
+        Property { name: "lon"; type: "double" }
+        Property { name: "resultLimit"; type: "int" }
+        Property { name: "pattern"; type: "string" }
+        Property { name: "compare"; type: "QJSValue" }
+        Property { name: "equals"; type: "QJSValue" }
+        Signal {
+            name: "SearchRequested"
+            Parameter { name: "searchPattern"; type: "string" }
+            Parameter { name: "limit"; type: "int" }
+            Parameter { name: "searchCenter"; type: "osmscout::GeoCoord" }
+            Parameter { name: "defaultRegion"; type: "AdminRegionInfoRef" }
+            Parameter { name: "breaker"; type: "osmscout::BreakerRef" }
+        }
+        Signal {
+            name: "SearchingChanged"
+            Parameter { type: "bool" }
+        }
+        Signal {
+            name: "countChanged"
+            Parameter { type: "int" }
+        }
+        Signal {
+            name: "regionLookupRequested"
+            Parameter { type: "osmscout::GeoCoord" }
+        }
+        Method {
+            name: "setPattern"
+            Parameter { name: "pattern"; type: "string" }
+        }
+        Method {
+            name: "onSearchResult"
+            Parameter { name: "searchPattern"; type: "string" }
+            Parameter { type: "QList<LocationEntry>" }
+        }
+        Method {
+            name: "onSearchFinished"
+            Parameter { name: "searchPattern"; type: "string" }
+            Parameter { name: "error"; type: "bool" }
+        }
+        Method {
+            name: "onLocationAdminRegions"
+            Parameter { type: "osmscout::GeoCoord" }
+            Parameter { type: "QList<AdminRegionInfoRef>" }
+        }
+        Method {
+            name: "onLocationAdminRegionFinished"
+            Parameter { type: "osmscout::GeoCoord" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "get"
+            type: "QObject*"
+            Parameter { name: "row"; type: "int" }
+        }
+    }
+    Component {
+        name: "osmscout::MapDownloadsModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/MapDownloadsModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "MapNameRole": 256,
+                "TargetDirectoryRole": 257,
+                "ProgressRole": 258,
+                "ProgressDescriptionRole": 259,
+                "ErrorStringRole": 260
+            }
+        }
+        Signal {
+            name: "mapDownloadFails"
+            Parameter { name: "message"; type: "string" }
+        }
+        Method { name: "onDownloadJobsChanged" }
+        Method { name: "onDownloadProgress" }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "cancel"
+            Parameter { name: "row"; type: "int" }
+        }
+        Method {
+            name: "suggestedDirectory"
+            type: "string"
+            Parameter { name: "map"; type: "QObject"; isPointer: true }
+            Parameter { name: "rootDirectory"; type: "string" }
+        }
+        Method {
+            name: "suggestedDirectory"
+            type: "string"
+            Parameter { name: "map"; type: "QObject"; isPointer: true }
+        }
+        Method {
+            name: "downloadMap"
+            Parameter { name: "map"; type: "QObject"; isPointer: true }
+            Parameter { name: "dir"; type: "string" }
+        }
+        Method { name: "getLookupDirectories"; type: "QStringList" }
+        Method {
+            name: "getFreeSpace"
+            type: "double"
+            Parameter { name: "dir"; type: "string" }
+        }
+    }
+    Component {
+        name: "osmscout::MapObjectInfoModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/MapObjectInfoModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "LabelRole": 256,
+                "TypeRole": 257,
+                "IdRole": 258,
+                "NameRole": 259,
+                "ObjectRole": 260,
+                "PhoneRole": 261,
+                "WebsiteRole": 262,
+                "AddressLocationRole": 263,
+                "AddressNumberRole": 264,
+                "PostalCodeRole": 265,
+                "RegionRole": 266,
+                "LatRole": 267,
+                "LonRole": 268
+            }
+        }
+        Property { name: "ready"; type: "bool"; isReadonly: true }
+        Signal {
+            name: "readyChange"
+            Parameter { name: "ready"; type: "bool" }
+        }
+        Signal {
+            name: "objectsOnViewRequested"
+            Parameter { name: "view"; type: "MapViewStruct" }
+            Parameter { name: "filterRectangle"; type: "QRectF" }
+        }
+        Signal {
+            name: "objectsRequested"
+            Parameter { name: "entry"; type: "LocationEntry" }
+            Parameter { name: "reverseLookupAddresses"; type: "bool" }
+        }
+        Method {
+            name: "dbInitialized"
+            Parameter { type: "DatabaseLoadedResponse" }
+        }
+        Method {
+            name: "setPosition"
+            Parameter { name: "mapView"; type: "QObject"; isPointer: true }
+            Parameter { name: "width"; type: "int" }
+            Parameter { name: "height"; type: "int" }
+            Parameter { name: "screenX"; type: "int" }
+            Parameter { name: "screenY"; type: "int" }
+        }
+        Method {
+            name: "onViewObjectsLoaded"
+            Parameter { type: "MapViewStruct" }
+            Parameter { name: "objects"; type: "QList<LookupModule::ObjectInfo>" }
+        }
+        Method {
+            name: "setLocationEntry"
+            Parameter { name: "o"; type: "QObject"; isPointer: true }
+        }
+        Method {
+            name: "onObjectsLoaded"
+            Parameter { name: "entry"; type: "LocationEntry" }
+            Parameter { name: "objects"; type: "QList<LookupModule::ObjectInfo>" }
+        }
+        Method {
+            name: "createOverlayObject"
+            type: "QObject*"
+            Parameter { name: "row"; type: "int" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+    }
+    Component {
+        name: "osmscout::MapOverlay"
+        defaultProperty: "data"
+        prototype: "QQuickPaintedItem"
+        Property { name: "view"; type: "QObject"; isPointer: true }
+        Method {
+            name: "changeView"
+            Parameter { name: "view"; type: "MapView" }
+        }
+        Method { name: "redraw" }
+    }
+    Component {
+        name: "osmscout::MapStyleModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/MapStyleModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "NameRole": 256,
+                "FileRole": 257,
+                "PathRole": 258
+            }
+        }
+        Property { name: "style"; type: "string" }
+        Signal {
+            name: "loadStyleRequested"
+            Parameter { type: "string" }
+            Parameter { type: "std::unordered_map<std::string,bool>" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "indexOf"
+            type: "int"
+            Parameter { name: "style"; type: "string" }
+        }
+        Method {
+            name: "file"
+            type: "string"
+            Parameter { name: "i"; type: "int" }
+        }
+    }
+    Component {
+        name: "osmscout::MapView"
+        prototype: "QObject"
+        Property { name: "lat"; type: "double"; isReadonly: true }
+        Property { name: "lon"; type: "double"; isReadonly: true }
+        Property { name: "angle"; type: "double"; isReadonly: true }
+        Property { name: "mag"; type: "double"; isReadonly: true }
+        Property { name: "magLevel"; type: "uint32_t"; isReadonly: true }
+        Property { name: "mapDpi"; type: "double"; isReadonly: true }
+    }
+    Component {
+        name: "osmscout::MapWidget"
+        defaultProperty: "data"
+        prototype: "QQuickPaintedItem"
+        exports: ["net.sf.libosmscout.map/Map 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "view"; type: "QObject"; isPointer: true }
+        Property { name: "vehiclePosition"; type: "QObject"; isPointer: true }
+        Property { name: "lat"; type: "double"; isReadonly: true }
+        Property { name: "lon"; type: "double"; isReadonly: true }
+        Property { name: "zoomLevel"; type: "int"; isReadonly: true }
+        Property { name: "zoomLevelName"; type: "string"; isReadonly: true }
+        Property { name: "pixelSize"; type: "double"; isReadonly: true }
+        Property { name: "databaseLoaded"; type: "bool"; isReadonly: true }
+        Property { name: "finished"; type: "bool"; isReadonly: true }
+        Property { name: "showCurrentPosition"; type: "bool" }
+        Property { name: "lockToPosition"; type: "bool" }
+        Property { name: "followVehicle"; type: "bool" }
+        Property { name: "stylesheetFilename"; type: "string"; isReadonly: true }
+        Property { name: "renderingType"; type: "string" }
+        Property { name: "stylesheetHasErrors"; type: "bool"; isReadonly: true }
+        Property { name: "stylesheetErrorLine"; type: "int"; isReadonly: true }
+        Property { name: "stylesheetErrorColumn"; type: "int"; isReadonly: true }
+        Property { name: "stylesheetErrorDescription"; type: "string"; isReadonly: true }
+        Property { name: "vehicleStandardIconFile"; type: "string" }
+        Property { name: "vehicleNoGpsSignalIconFile"; type: "string" }
+        Property { name: "vehicleInTunnelIconFile"; type: "string" }
+        Property { name: "vehicleIconSize"; type: "double" }
+        Signal { name: "lockToPossitionChanged" }
+        Signal {
+            name: "finishedChanged"
+            Parameter { name: "finished"; type: "bool" }
+        }
+        Signal {
+            name: "mouseMove"
+            Parameter { name: "screenX"; type: "int" }
+            Parameter { name: "screenY"; type: "int" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+            Parameter { name: "modifiers"; type: "Qt::KeyboardModifiers" }
+        }
+        Signal {
+            name: "tap"
+            Parameter { name: "screenX"; type: "int" }
+            Parameter { name: "screenY"; type: "int" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Signal {
+            name: "doubleTap"
+            Parameter { name: "screenX"; type: "int" }
+            Parameter { name: "screenY"; type: "int" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Signal {
+            name: "longTap"
+            Parameter { name: "screenX"; type: "int" }
+            Parameter { name: "screenY"; type: "int" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Signal {
+            name: "tapLongTap"
+            Parameter { name: "screenX"; type: "int" }
+            Parameter { name: "screenY"; type: "int" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Signal { name: "styleErrorsChanged" }
+        Signal {
+            name: "databaseLoaded"
+            Parameter { type: "osmscout::GeoBox" }
+        }
+        Signal {
+            name: "renderingTypeChanged"
+            Parameter { name: "type"; type: "string" }
+        }
+        Method {
+            name: "changeView"
+            Parameter { name: "view"; type: "MapView" }
+        }
+        Method { name: "redraw" }
+        Method { name: "recenter" }
+        Method {
+            name: "zoom"
+            Parameter { name: "zoomFactor"; type: "double" }
+        }
+        Method {
+            name: "zoomIn"
+            Parameter { name: "zoomFactor"; type: "double" }
+        }
+        Method {
+            name: "zoomOut"
+            Parameter { name: "zoomFactor"; type: "double" }
+        }
+        Method {
+            name: "zoom"
+            Parameter { name: "zoomFactor"; type: "double" }
+            Parameter { name: "widgetPosition"; type: "QPoint" }
+        }
+        Method {
+            name: "zoomIn"
+            Parameter { name: "zoomFactor"; type: "double" }
+            Parameter { name: "widgetPosition"; type: "QPoint" }
+        }
+        Method {
+            name: "zoomOut"
+            Parameter { name: "zoomFactor"; type: "double" }
+            Parameter { name: "widgetPosition"; type: "QPoint" }
+        }
+        Method {
+            name: "move"
+            Parameter { name: "vector"; type: "QVector2D" }
+        }
+        Method { name: "left" }
+        Method { name: "right" }
+        Method { name: "up" }
+        Method { name: "down" }
+        Method {
+            name: "rotateTo"
+            Parameter { name: "angle"; type: "double" }
+        }
+        Method { name: "rotateLeft" }
+        Method { name: "rotateRight" }
+        Method { name: "toggleDaylight" }
+        Method { name: "reloadStyle" }
+        Method { name: "reloadTmpStyle" }
+        Method {
+            name: "showCoordinates"
+            Parameter { name: "coord"; type: "osmscout::GeoCoord" }
+            Parameter { name: "magnification"; type: "osmscout::Magnification" }
+        }
+        Method {
+            name: "showCoordinates"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Method {
+            name: "showCoordinatesInstantly"
+            Parameter { name: "coord"; type: "osmscout::GeoCoord" }
+            Parameter { name: "magnification"; type: "osmscout::Magnification" }
+        }
+        Method {
+            name: "showCoordinatesInstantly"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Method {
+            name: "showLocation"
+            Parameter { name: "location"; type: "LocationEntry"; isPointer: true }
+        }
+        Method {
+            name: "locationChanged"
+            Parameter { name: "locationValid"; type: "bool" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+            Parameter { name: "horizontalAccuracyValid"; type: "bool" }
+            Parameter { name: "horizontalAccuracy"; type: "double" }
+            Parameter { name: "lastUpdate"; type: "QDateTime" }
+        }
+        Method {
+            name: "locationChanged"
+            Parameter { name: "locationValid"; type: "bool" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+            Parameter { name: "horizontalAccuracyValid"; type: "bool" }
+            Parameter { name: "horizontalAccuracy"; type: "double" }
+        }
+        Method {
+            name: "locationChanged"
+            Parameter { name: "locationValid"; type: "bool" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+            Parameter { name: "horizontalAccuracyValid"; type: "bool" }
+        }
+        Method {
+            name: "locationChanged"
+            Parameter { name: "locationValid"; type: "bool" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Method {
+            name: "addPositionMark"
+            Parameter { name: "id"; type: "int" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Method {
+            name: "removePositionMark"
+            Parameter { name: "id"; type: "int" }
+        }
+        Method {
+            name: "addOverlayObject"
+            Parameter { name: "id"; type: "int" }
+            Parameter { name: "o"; type: "QObject"; isPointer: true }
+        }
+        Method {
+            name: "removeOverlayObject"
+            Parameter { name: "id"; type: "int" }
+        }
+        Method { name: "removeAllOverlayObjects" }
+        Method {
+            name: "createOverlayWay"
+            type: "OverlayWay*"
+            Parameter { name: "type"; type: "string" }
+        }
+        Method { name: "createOverlayWay"; type: "OverlayWay*" }
+        Method {
+            name: "createOverlayArea"
+            type: "OverlayArea*"
+            Parameter { name: "type"; type: "string" }
+        }
+        Method { name: "createOverlayArea"; type: "OverlayArea*" }
+        Method {
+            name: "createOverlayNode"
+            type: "OverlayNode*"
+            Parameter { name: "type"; type: "string" }
+        }
+        Method { name: "createOverlayNode"; type: "OverlayNode*" }
+        Method { name: "toggleDebug"; type: "bool" }
+        Method { name: "toggleInfo"; type: "bool" }
+        Method {
+            name: "setVehicleScaleFactor"
+            Parameter { name: "factor"; type: "float" }
+        }
+        Method {
+            name: "isInDatabaseBoundingBox"
+            type: "bool"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+        Method {
+            name: "screenPosition"
+            type: "QPointF"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+    }
+    Component {
+        name: "osmscout::NavigationModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/NavigationModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "route"; type: "QObject"; isPointer: true }
+        Property { name: "routeWay"; type: "QObject"; isReadonly: true; isPointer: true }
+        Property { name: "routeWayAhead"; type: "QObject"; isReadonly: true; isPointer: true }
+        Property { name: "routeWayPassed"; type: "QObject"; isReadonly: true; isPointer: true }
+        Property { name: "nextRouteStep"; type: "QObject"; isReadonly: true; isPointer: true }
+        Property { name: "vehiclePosition"; type: "QObject"; isReadonly: true; isPointer: true }
+        Property { name: "arrivalEstimate"; type: "QDateTime"; isReadonly: true }
+        Property { name: "remainingDistance"; type: "double"; isReadonly: true }
+        Property { name: "currentSpeed"; type: "double"; isReadonly: true }
+        Property { name: "maxAllowedSpeed"; type: "double"; isReadonly: true }
+        Property { name: "laneCount"; type: "int"; isReadonly: true }
+        Property { name: "laneSuggested"; type: "bool"; isReadonly: true }
+        Property { name: "suggestedLaneFrom"; type: "int"; isReadonly: true }
+        Property { name: "suggestedLaneTo"; type: "int"; isReadonly: true }
+        Property { name: "laneTurns"; type: "QStringList"; isReadonly: true }
+        Signal { name: "update" }
+        Signal { name: "arrivalUpdate" }
+        Signal { name: "routeAheadChanged" }
+        Signal {
+            name: "routeChanged"
+            Parameter { name: "route"; type: "QtRouteData" }
+            Parameter { name: "vehicle"; type: "osmscout::Vehicle" }
+        }
+        Signal {
+            name: "positionChange"
+            Parameter { name: "coord"; type: "osmscout::GeoCoord" }
+            Parameter { name: "horizontalAccuracyValid"; type: "bool" }
+            Parameter { name: "horizontalAccuracy"; type: "double" }
+        }
+        Signal {
+            name: "rerouteRequest"
+            Parameter { name: "fromLat"; type: "double" }
+            Parameter { name: "fromLon"; type: "double" }
+            Parameter { name: "bearing"; type: "string" }
+            Parameter { name: "bearingAngle"; type: "double" }
+            Parameter { name: "toLat"; type: "double" }
+            Parameter { name: "toLon"; type: "double" }
+        }
+        Signal {
+            name: "targetReached"
+            Parameter { name: "targetBearing"; type: "string" }
+            Parameter { name: "targetDistance"; type: "double" }
+        }
+        Signal {
+            name: "positionEstimate"
+            Parameter { name: "state"; type: "osmscout::PositionAgent::PositionState" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+            Parameter { name: "bearing"; type: "string" }
+        }
+        Signal {
+            name: "currentSpeedUpdate"
+            Parameter { name: "currentSpeed"; type: "double" }
+        }
+        Signal {
+            name: "maxAllowedSpeedUpdate"
+            Parameter { name: "maxAllowedSpeed"; type: "double" }
+        }
+        Signal { name: "laneUpdate" }
+        Method {
+            name: "locationChanged"
+            Parameter { name: "locationValid"; type: "bool" }
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+            Parameter { name: "horizontalAccuracyValid"; type: "bool" }
+            Parameter { name: "horizontalAccuracy"; type: "double" }
+        }
+        Method {
+            name: "onUpdate"
+            Parameter { name: "instructions"; type: "std::list<RouteStep>" }
+        }
+        Method {
+            name: "onUpdateNext"
+            Parameter { name: "nextRouteInstruction"; type: "RouteStep" }
+        }
+        Method {
+            name: "onPositionEstimate"
+            Parameter { name: "state"; type: "PositionAgent::PositionState" }
+            Parameter { name: "coord"; type: "GeoCoord" }
+            Parameter { name: "bearing"; type: "std::optional<osmscout::Bearing>" }
+        }
+        Method {
+            name: "onTargetReached"
+            Parameter { name: "targetBearing"; type: "osmscout::Bearing" }
+            Parameter { name: "targetDistance"; type: "osmscout::Distance" }
+        }
+        Method {
+            name: "onRerouteRequest"
+            Parameter { name: "from"; type: "GeoCoord" }
+            Parameter { name: "initialBearing"; type: "std::optional<osmscout::Bearing>" }
+            Parameter { name: "to"; type: "GeoCoord" }
+        }
+        Method {
+            name: "onArrivalEstimate"
+            Parameter { name: "arrivalEstimate"; type: "QDateTime" }
+            Parameter { name: "remainingDistance"; type: "osmscout::Distance" }
+        }
+        Method {
+            name: "onCurrentSpeed"
+            Parameter { name: "currentSpeed"; type: "double" }
+        }
+        Method {
+            name: "onMaxAllowedSpeed"
+            Parameter { name: "maxAllowedSpeed"; type: "double" }
+        }
+        Method {
+            name: "onLaneUpdate"
+            Parameter { name: "lane"; type: "osmscout::LaneAgent::Lane" }
+        }
+    }
+    Component {
+        name: "osmscout::NearPOIModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/NearPOIModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "LabelRole": 256,
+                "TypeRole": 257,
+                "RegionRole": 258,
+                "LatRole": 259,
+                "LonRole": 260,
+                "DistanceRole": 261,
+                "BearingRole": 262,
+                "LocationObjectRole": 263
+            }
+        }
+        Property { name: "count"; type: "int"; isReadonly: true }
+        Property { name: "searching"; type: "bool"; isReadonly: true }
+        Property { name: "lat"; type: "double" }
+        Property { name: "lon"; type: "double" }
+        Property { name: "maxDistance"; type: "double" }
+        Property { name: "resultLimit"; type: "int" }
+        Property { name: "types"; type: "QStringList" }
+        Signal {
+            name: "countChanged"
+            Parameter { type: "int" }
+        }
+        Signal {
+            name: "SearchingChanged"
+            Parameter { type: "bool" }
+        }
+        Signal {
+            name: "lookupPOIRequest"
+            Parameter { name: "requestId"; type: "int" }
+            Parameter { name: "breaker"; type: "osmscout::BreakerRef" }
+            Parameter { name: "searchCenter"; type: "osmscout::GeoCoord" }
+            Parameter { name: "types"; type: "QStringList" }
+            Parameter { name: "maxDistance"; type: "double" }
+        }
+        Method {
+            name: "onLookupFinished"
+            Parameter { name: "requestId"; type: "int" }
+        }
+        Method {
+            name: "onLookupResult"
+            Parameter { name: "requestId"; type: "int" }
+            Parameter { name: "locations"; type: "QList<LocationEntry>" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "rowCount"
+            type: "int"
+            Parameter { name: "parent"; type: "QModelIndex" }
+        }
+        Method { name: "rowCount"; type: "int" }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "get"
+            type: "QObject*"
+            Parameter { name: "row"; type: "int" }
+        }
+    }
+    Component {
+        name: "osmscout::OnlineTileProviderModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/OnlineTileProviderModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method { name: "count"; type: "int" }
+        Method {
+            name: "getId"
+            type: "string"
+            Parameter { name: "row"; type: "int" }
+        }
+        Method {
+            name: "getName"
+            type: "string"
+            Parameter { name: "row"; type: "int" }
+        }
+    }
+    Component {
+        name: "osmscout::OverlayArea"
+        prototype: "osmscout::OverlayObject"
+        exports: ["net.sf.libosmscout.map/OverlayArea 1.0"]
+        exportMetaObjectRevisions: [0]
+    }
+    Component {
+        name: "osmscout::OverlayNode"
+        prototype: "osmscout::OverlayObject"
+        exports: ["net.sf.libosmscout.map/OverlayNode 1.0"]
+        exportMetaObjectRevisions: [0]
+    }
+    Component {
+        name: "osmscout::OverlayObject"
+        prototype: "QObject"
+        Property { name: "type"; type: "string" }
+        Property { name: "size"; type: "int"; isReadonly: true }
+        Property { name: "objectType"; type: "string"; isReadonly: true }
+        Property { name: "layer"; type: "signed char" }
+        Property { name: "name"; type: "string" }
+        Property { name: "color"; type: "string" }
+        Property { name: "boundingBox"; type: "LocationEntry"; isReadonly: true; isPointer: true }
+        Signal { name: "bboxChanged" }
+        Method { name: "clear" }
+        Method {
+            name: "addPoint"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+    }
+    Component {
+        name: "osmscout::OverlayWay"
+        prototype: "osmscout::OverlayObject"
+        exports: ["net.sf.libosmscout.map/OverlayWay 1.0"]
+        exportMetaObjectRevisions: [0]
+    }
+    Component {
+        name: "osmscout::QmlRoutingProfile"
+        prototype: "QObject"
+        exports: ["net.sf.libosmscout.map/RoutingProfile 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "QmlVehicle"
+            values: {
+                "FootVehicle": 2,
+                "BicycleVehicle": 4,
+                "CarVehicle": 8
+            }
+        }
+        Property { name: "vehicle"; type: "QmlVehicle" }
+        Property { name: "maxSpeed"; type: "double" }
+        Property { name: "speedTable"; type: "QVariantMap" }
+        Property { name: "applyJunctionPenalty"; type: "bool" }
+        Property { name: "penaltySameType"; type: "double" }
+        Property { name: "penaltyDifferentType"; type: "double" }
+        Property { name: "maxPenalty"; type: "double" }
+        Signal { name: "update" }
+    }
+    Component {
+        name: "osmscout::QmlSettings"
+        prototype: "QObject"
+        exports: ["net.sf.libosmscout.map/Settings 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "physicalDPI"; type: "double"; isReadonly: true }
+        Property { name: "mapDPI"; type: "double" }
+        Property { name: "onlineTiles"; type: "bool" }
+        Property { name: "onlineTileProviderId"; type: "string" }
+        Property { name: "offlineMap"; type: "bool" }
+        Property { name: "styleSheetFile"; type: "string" }
+        Property { name: "renderSea"; type: "bool" }
+        Property { name: "fontName"; type: "string" }
+        Property { name: "fontSize"; type: "double" }
+        Property { name: "showAltLanguage"; type: "bool" }
+        Property { name: "units"; type: "string" }
+        Signal {
+            name: "MapDPIChange"
+            Parameter { name: "dpi"; type: "double" }
+        }
+        Signal {
+            name: "OnlineTilesEnabledChanged"
+            Parameter { name: "enabled"; type: "bool" }
+        }
+        Signal {
+            name: "OnlineTileProviderIdChanged"
+            Parameter { name: "id"; type: "string" }
+        }
+        Signal {
+            name: "OfflineMapChanged"
+            Parameter { type: "bool" }
+        }
+        Signal {
+            name: "StyleSheetFileChanged"
+            Parameter { name: "file"; type: "string" }
+        }
+        Signal {
+            name: "RenderSeaChanged"
+            Parameter { type: "bool" }
+        }
+        Signal {
+            name: "FontNameChanged"
+            Parameter { name: "fontName"; type: "string" }
+        }
+        Signal {
+            name: "FontSizeChanged"
+            Parameter { name: "fontSize"; type: "double" }
+        }
+        Signal {
+            name: "ShowAltLanguageChanged"
+            Parameter { name: "showAltLanguage"; type: "bool" }
+        }
+        Signal {
+            name: "UnitsChanged"
+            Parameter { name: "units"; type: "string" }
+        }
+        Method { name: "onlineProviderCopyright"; type: "string" }
+    }
+    Component { name: "osmscout::QtRouteData"; prototype: "QObject" }
+    Component {
+        name: "osmscout::RouteStep"
+        prototype: "QObject"
+        exports: ["net.sf.libosmscout.map/RouteStep 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "ShortDescriptionRole": 257,
+                "DescriptionRole": 258,
+                "TypeRole": 259,
+                "RoundaboutExitRole": 260,
+                "RoundaboutClockwiseRole": 261,
+                "latRole": 262,
+                "lonRole": 263,
+                "distanceRole": 264,
+                "distanceDeltaRole": 265,
+                "distanceToRole": 266,
+                "timeRole": 267,
+                "timeDeltaRole": 268
+            }
+        }
+        Property { name: "type"; type: "string"; isReadonly: true }
+        Property { name: "lat"; type: "double"; isReadonly: true }
+        Property { name: "lon"; type: "double"; isReadonly: true }
+        Property { name: "distance"; type: "double"; isReadonly: true }
+        Property { name: "distanceDelta"; type: "double"; isReadonly: true }
+        Property { name: "distanceTo"; type: "double"; isReadonly: true }
+        Property { name: "time"; type: "double"; isReadonly: true }
+        Property { name: "timeDelta"; type: "double"; isReadonly: true }
+        Property { name: "description"; type: "string"; isReadonly: true }
+        Property { name: "shortDescription"; type: "string"; isReadonly: true }
+        Property { name: "streetNames"; type: "QStringList"; isReadonly: true }
+        Property { name: "roundaboutExit"; type: "int"; isReadonly: true }
+        Property { name: "roundaboutClockwise"; type: "bool"; isReadonly: true }
+        Signal { name: "update" }
+    }
+    Component {
+        name: "osmscout::RoutingListModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/RoutingListModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "count"; type: "int"; isReadonly: true }
+        Property { name: "ready"; type: "bool"; isReadonly: true }
+        Property { name: "routeWay"; type: "QObject"; isReadonly: true; isPointer: true }
+        Property { name: "route"; type: "QObject"; isReadonly: true; isPointer: true }
+        Property { name: "length"; type: "double"; isReadonly: true }
+        Property { name: "duration"; type: "double"; isReadonly: true }
+        Signal {
+            name: "routeRequest"
+            Parameter { name: "start"; type: "LocationEntryRef" }
+            Parameter { name: "target"; type: "LocationEntryRef" }
+            Parameter { name: "profile"; type: "QmlRoutingProfileRef" }
+            Parameter { name: "requestId"; type: "int" }
+            Parameter { name: "breaker"; type: "osmscout::BreakerRef" }
+        }
+        Signal { name: "computingChanged" }
+        Signal {
+            name: "routeFailed"
+            Parameter { name: "reason"; type: "string" }
+        }
+        Signal {
+            name: "routingProgress"
+            Parameter { name: "percent"; type: "int" }
+        }
+        Method {
+            name: "setStartAndTarget"
+            Parameter { name: "start"; type: "LocationEntry"; isPointer: true }
+            Parameter { name: "target"; type: "LocationEntry"; isPointer: true }
+            Parameter { name: "vehicleStr"; type: "string" }
+        }
+        Method {
+            name: "setStartAndTarget"
+            Parameter { name: "start"; type: "LocationEntry"; isPointer: true }
+            Parameter { name: "target"; type: "LocationEntry"; isPointer: true }
+        }
+        Method {
+            name: "setStartAndTarget"
+            Parameter { name: "start"; type: "LocationEntry"; isPointer: true }
+            Parameter { name: "target"; type: "LocationEntry"; isPointer: true }
+            Parameter { name: "routingProfile"; type: "QmlRoutingProfile"; isPointer: true }
+        }
+        Method { name: "clear" }
+        Method { name: "cancel" }
+        Method {
+            name: "onRouteComputed"
+            Parameter { name: "route"; type: "QtRouteData" }
+            Parameter { name: "requestId"; type: "int" }
+        }
+        Method {
+            name: "onRouteFailed"
+            Parameter { name: "reason"; type: "string" }
+            Parameter { name: "requestId"; type: "int" }
+        }
+        Method {
+            name: "onRoutingProgress"
+            Parameter { name: "percent"; type: "int" }
+            Parameter { name: "requestId"; type: "int" }
+        }
+        Method {
+            name: "get"
+            type: "QObject*"
+            Parameter { name: "row"; type: "int" }
+        }
+        Method { name: "availableVehicles"; type: "QStringList" }
+        Method {
+            name: "locationEntryFromPosition"
+            type: "QObject*"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+            Parameter { name: "label"; type: "string" }
+        }
+        Method {
+            name: "locationEntryFromPosition"
+            type: "QObject*"
+            Parameter { name: "lat"; type: "double" }
+            Parameter { name: "lon"; type: "double" }
+        }
+    }
+    Component {
+        name: "osmscout::StyleFlagsModel"
+        prototype: "QAbstractListModel"
+        exports: ["net.sf.libosmscout.map/StyleFlagsModel 1.0"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Roles"
+            values: {
+                "KeyRole": 256,
+                "ValueRole": 257,
+                "InProgressRole": 258
+            }
+        }
+        Signal { name: "styleFlagsRequested" }
+        Signal {
+            name: "setFlagRequest"
+            Parameter { name: "key"; type: "string" }
+            Parameter { name: "value"; type: "bool" }
+        }
+        Method {
+            name: "data"
+            type: "QVariant"
+            Parameter { name: "index"; type: "QModelIndex" }
+            Parameter { name: "role"; type: "int" }
+        }
+        Method {
+            name: "flags"
+            type: "Qt::ItemFlags"
+            Parameter { name: "index"; type: "QModelIndex" }
+        }
+        Method {
+            name: "setFlag"
+            Parameter { name: "key"; type: "string" }
+            Parameter { name: "value"; type: "bool" }
+        }
+    }
+    Component {
+        name: "osmscout::TiledMapOverlay"
+        defaultProperty: "data"
+        prototype: "osmscout::MapOverlay"
+        exports: ["net.sf.libosmscout.map/TiledMapOverlay 1.0"]
+        exportMetaObjectRevisions: [0]
+        Property { name: "provider"; type: "QJsonValue" }
+        Property { name: "enabled"; type: "bool" }
+        Signal {
+            name: "providerChanged"
+            Parameter { name: "provider"; type: "OnlineTileProvider" }
+        }
+        Method {
+            name: "tileDownloaded"
+            Parameter { name: "zoomLevel"; type: "uint32_t" }
+            Parameter { name: "x"; type: "uint32_t" }
+            Parameter { name: "y"; type: "uint32_t" }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+diff --git a/dev/CMakeLists.txt b/dev/CMakeLists.txt
+index 91d73682..86b6945c 100644
+--- a/dev/CMakeLists.txt
++++ b/dev/CMakeLists.txt
+@@ -60,3 +60,9 @@ if(BUILD_ALL OR BUILD_TESTS)
+         configure_file(${CMAKE_SOURCE_DIR}/cmake/run_tests.bat ${CMAKE_BINARY_DIR} NEWLINE_STYLE WIN32)
+     endif()
+ endif()
++
++configure_file(${CMAKE_CURRENT_SOURCE_DIR}/sobjectizer.pc.in ${CMAKE_CURRENT_BINARY_DIR}/sobjectizer.pc @ONLY)
++configure_file(${CMAKE_CURRENT_SOURCE_DIR}/sobjectizer-static.pc.in ${CMAKE_CURRENT_BINARY_DIR}/sobjectizer-static.pc @ONLY)
++
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sobjectizer.pc DESTINATION lib/pkgconfig/)
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sobjectizer-static.pc DESTINATION lib/pkgconfig/)
+\ No newline at end of file
+diff --git a/dev/sobjectizer-static.pc.in b/dev/sobjectizer-static.pc.in
+new file mode 100644
+index 00000000..547c7f24
+--- /dev/null
++++ b/dev/sobjectizer-static.pc.in
+@@ -0,0 +1,11 @@
++prefix=@CMAKE_INSTALL_PREFIX@
++exec_prefix=${prefix}
++libdir=${prefix}/lib
++includedir=${prefix}/include
++
++Name: sobjectizer
++Description: sobjectizer
++URL: https://github.com/Stiffstream/sobjectizer/
++Version: 5.7.5
++Cflags: -I${includedir}
++Libs: -L${libdir} -lso_s.5.7.5 -lpthread
+diff --git a/dev/sobjectizer.pc.in b/dev/sobjectizer.pc.in
+new file mode 100644
+index 00000000..fedc8345
+--- /dev/null
++++ b/dev/sobjectizer.pc.in
+@@ -0,0 +1,11 @@
++prefix=@CMAKE_INSTALL_PREFIX@
++exec_prefix=${prefix}
++libdir=${prefix}/lib
++includedir=${prefix}/include
++
++Name: sobjectizer
++Description: sobjectizer
++URL: https://github.com/Stiffstream/sobjectizer/
++Version: 5.7.5
++Cflags: -I${includedir}
++Libs: -L${libdir} -lso.5.7.5

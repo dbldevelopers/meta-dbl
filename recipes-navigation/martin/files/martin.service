@@ -1,0 +1,14 @@
+[Unit]
+Description=Martin Tile Server
+After=basic.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/martin --config /etc/martin/martin.yaml
+Restart=on-failure
+RestartSec=100ms
+StartLimitBurst=15
+TimeoutStartSec=10
+
+[Install]
+WantedBy=basic.target

@@ -1,0 +1,29 @@
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/MapRenderer.cpp b/libosmscout-client-qt/src/osmscoutclientqt/MapRenderer.cpp
+index a46591552..b0d372f3c 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/MapRenderer.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/MapRenderer.cpp
+@@ -78,9 +78,9 @@ MapRenderer::MapRenderer(QThread *thread,
+ MapRenderer::~MapRenderer()
+ {
+   if (thread!=QThread::currentThread()){
+-    qWarning() << "Destroy" << this << "from non incorrect thread;" << thread << "!=" << QThread::currentThread();
++    osmscout::log.Debug() << "Destroy" << this << "from non incorrect thread;" << thread << "!=" << QThread::currentThread();
+   }
+-  qDebug() << "~MapRenderer";
++  osmscout::log.Debug() << "~MapRenderer";
+   if (thread!=nullptr){
+     thread->quit();
+   }
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp b/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp
+index 2f572af15..9fdde89c6 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/PlaneMapRenderer.cpp
+@@ -75,7 +75,7 @@ PlaneMapRenderer::PlaneMapRenderer(QThread *thread,
+ 
+ PlaneMapRenderer::~PlaneMapRenderer()
+ {
+-  qDebug() << "~PlaneMapRenderer";
++  osmscout::log.Debug() << "~PlaneMapRenderer";
+   if (currentImage!=nullptr)
+     delete currentImage;
+   if (finishedImage!=nullptr)

@@ -1,0 +1,203 @@
+diff --git a/libosmscout-client-qt/include/osmscoutclientqt/OSMScoutQt.h b/libosmscout-client-qt/include/osmscoutclientqt/OSMScoutQt.h
+index 55eeb00fc..c9a76d252 100644
+--- a/libosmscout-client-qt/include/osmscoutclientqt/OSMScoutQt.h
++++ b/libosmscout-client-qt/include/osmscoutclientqt/OSMScoutQt.h
+@@ -45,6 +45,8 @@
+ 
+ namespace osmscout {
+ 
++#define OSMSCOUT_TILE_CACHE_DIR_SIZE_EXT
++
+ class OSMScoutQt;
+ 
+ /**
+@@ -65,6 +67,7 @@ private:
+ 
+   size_t onlineTileCacheSize{100};
+   size_t offlineTileCacheSize{200};
++  size_t tileCacheDirectorySize{50000000}; // default 50MB
+ 
+   QString voiceLookupDirectory;
+ 
+@@ -179,6 +182,12 @@ public:
+     return *this;
+   }
+ 
++  inline OSMScoutQtBuilder& WithTileCacheDirSize(size_t tileCacheDirectorySize)
++  {
++    this->tileCacheDirectorySize=tileCacheDirectorySize;
++    return *this;
++  }
++
+   inline OSMScoutQtBuilder& WithUserAgent(const QString &appName,
+                                           const QString &appVersion){
+     this->appName=appName;
+@@ -247,6 +256,7 @@ private:
+   QString          cacheLocation;
+   size_t           onlineTileCacheSize;
+   size_t           offlineTileCacheSize;
++  size_t           tileCacheDirectorySize;
+   QString          userAgent;
+   std::atomic_int  liveBackgroundThreads;
+ 
+@@ -262,6 +272,7 @@ private:
+              QString cacheLocation,
+              size_t onlineTileCacheSize,
+              size_t offlineTileCacheSize,
++             size_t tileCacheDirectorySize,
+              QString userAgent,
+              QStringList customPoiTypes);
+ 
+@@ -324,6 +335,7 @@ public:
+   QString GetUserAgent() const;
+   QString GetCacheLocation() const;
+   size_t  GetOnlineTileCacheSize() const;
++  size_t  GetTileCacheDirectorySize() const;
+   QString GetIconDirectory() const;
+ 
+   static void RegisterQmlTypes(const char *uri="net.sf.libosmscout.map",
+diff --git a/libosmscout-client-qt/include/osmscoutclientqt/OsmTileDownloader.h b/libosmscout-client-qt/include/osmscoutclientqt/OsmTileDownloader.h
+index 4cd294862..e45a98a4c 100644
+--- a/libosmscout-client-qt/include/osmscoutclientqt/OsmTileDownloader.h
++++ b/libosmscout-client-qt/include/osmscoutclientqt/OsmTileDownloader.h
+@@ -47,6 +47,9 @@ public:
+                     const OnlineTileProvider &provider);
+   ~OsmTileDownloader() override;
+ 
++  void setDiskMaxCacheSize(long long int size);
++  long long int diskMaxCacheSize();
++
+ public slots:
+   void download(uint32_t zoomLevel, uint32_t x, uint32_t y);
+   void onlineTileProviderChanged(const OnlineTileProvider &provider);
+diff --git a/libosmscout-client-qt/include/osmscoutclientqt/TiledMapRenderer.h b/libosmscout-client-qt/include/osmscoutclientqt/TiledMapRenderer.h
+index 8dbbbe4a9..3524e8fe7 100644
+--- a/libosmscout-client-qt/include/osmscoutclientqt/TiledMapRenderer.h
++++ b/libosmscout-client-qt/include/osmscoutclientqt/TiledMapRenderer.h
+@@ -58,6 +58,7 @@ private:
+   mutable QMutex                tileCacheMutex;
+   TileCache                     onlineTileCache;
+   TileCache                     offlineTileCache;
++  size_t                        tileCacheDirectorySize;
+ 
+   OsmTileDownloader             *tileDownloader=nullptr;
+ 
+@@ -123,7 +124,8 @@ public:
+                    QString iconDirectory,
+                    QString tileCacheDirectory,
+                    size_t onlineTileCacheSize,
+-                   size_t offlineTileCacheSize);
++                   size_t offlineTileCacheSize,
++                   size_t tileCacheDirectorySize);
+ 
+   virtual ~TiledMapRenderer();
+ 
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/OSMScoutQt.cpp b/libosmscout-client-qt/src/osmscoutclientqt/OSMScoutQt.cpp
+index 474e5ce83..2bbfc6cb8 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/OSMScoutQt.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/OSMScoutQt.cpp
+@@ -176,6 +176,7 @@ bool OSMScoutQtBuilder::Init()
+                                   cacheLocation,
+                                   onlineTileCacheSize,
+                                   offlineTileCacheSize,
++                                  tileCacheDirectorySize,
+                                   userAgent,
+                                   customPoiTypes);
+ 
+@@ -286,6 +287,7 @@ OSMScoutQt::OSMScoutQt(SettingsRef settings,
+                        QString cacheLocation,
+                        size_t onlineTileCacheSize,
+                        size_t offlineTileCacheSize,
++                       size_t tileCacheDirectorySize,
+                        QString userAgent,
+                        QStringList customPoiTypes):
+         settings(settings),
+@@ -294,6 +296,7 @@ OSMScoutQt::OSMScoutQt(SettingsRef settings,
+         cacheLocation(cacheLocation),
+         onlineTileCacheSize(onlineTileCacheSize),
+         offlineTileCacheSize(offlineTileCacheSize),
++        tileCacheDirectorySize(tileCacheDirectorySize),
+         userAgent(userAgent),
+         liveBackgroundThreads(0)
+ {
+@@ -446,7 +449,8 @@ MapRenderer* OSMScoutQt::MakeMapRenderer(RenderingType type)
+                                      iconDirectory,
+                                      cacheLocation,
+                                      onlineTileCacheSize,
+-                                     offlineTileCacheSize);
++                                     offlineTileCacheSize,
++                                     tileCacheDirectorySize);
+   }else{
+     mapRenderer=new PlaneMapRenderer(thread,settings,dbThread,iconDirectory);
+   }
+@@ -491,6 +495,11 @@ size_t OSMScoutQt::GetOnlineTileCacheSize() const
+   return onlineTileCacheSize;
+ }
+ 
++size_t OSMScoutQt::GetTileCacheDirectorySize() const
++{
++  return tileCacheDirectorySize;
++}
++
+ QString OSMScoutQt::GetIconDirectory() const
+ {
+   return iconDirectory;
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/OsmTileDownloader.cpp b/libosmscout-client-qt/src/osmscoutclientqt/OsmTileDownloader.cpp
+index 1c4871d33..54106d727 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/OsmTileDownloader.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/OsmTileDownloader.cpp
+@@ -125,4 +125,15 @@ void OsmTileDownloader::fileDownloaded(const TileCacheKey &key, QNetworkReply *r
+ 
+   reply->deleteLater();
+ }
++
++void OsmTileDownloader::setDiskMaxCacheSize(long long int size)
++{
++  diskCache.setMaximumCacheSize(size);
++}
++
++long long int OsmTileDownloader::diskMaxCacheSize()
++{
++  return diskCache.maximumCacheSize();
++}
++
+ }
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/TiledMapOverlay.cpp b/libosmscout-client-qt/src/osmscoutclientqt/TiledMapOverlay.cpp
+index a5ef5bc00..2fa71b9d2 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/TiledMapOverlay.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/TiledMapOverlay.cpp
+@@ -52,6 +52,7 @@ void TileLoaderThread::init()
+   SettingsRef settings=OSMScoutQt::GetInstance().GetSettings();
+   QString tileCacheDirectory=OSMScoutQt::GetInstance().GetCacheLocation();
+   tileDownloader = new OsmTileDownloader(tileCacheDirectory,provider);
++  tileDownloader->setDiskMaxCacheSize(OSMScoutQt::GetInstance().GetTileCacheDirectorySize());
+ 
+   connect(tileDownloader, &OsmTileDownloader::failed,
+           this, &TileLoaderThread::tileDownloadFailed,
+diff --git a/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp b/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp
+index 46f716550..ff88941dd 100644
+--- a/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp
++++ b/libosmscout-client-qt/src/osmscoutclientqt/TiledMapRenderer.cpp
+@@ -36,11 +36,13 @@ TiledMapRenderer::TiledMapRenderer(QThread *thread,
+                                    QString iconDirectory,
+                                    QString tileCacheDirectory,
+                                    size_t onlineTileCacheSize,
+-                                   size_t offlineTileCacheSize):
++                                   size_t offlineTileCacheSize,
++                                   size_t tileCacheDirectorySize):
+   MapRenderer(thread,settings,dbThread,iconDirectory),
+   tileCacheDirectory(tileCacheDirectory),
+   onlineTileCache(onlineTileCacheSize), // online tiles can be loaded from disk cache easily
+   offlineTileCache(offlineTileCacheSize), // render offline tile is expensive
++  tileCacheDirectorySize(tileCacheDirectorySize),
+   tileDownloader(nullptr), // it will be created in different thread
+   loadJob(nullptr),
+   unknownColor(QColor::fromRgbF(1.0,1.0,1.0)) // white
+@@ -99,6 +101,7 @@ void TiledMapRenderer::Initialize()
+ 
+     // create tile downloader in correct thread
+     tileDownloader = new OsmTileDownloader(tileCacheDirectory,settings->GetOnlineTileProvider());
++    tileDownloader->setDiskMaxCacheSize(tileCacheDirectorySize);
+ 
+     connect(this, &TiledMapRenderer::onlineTileProviderSignal,
+             tileDownloader, &OsmTileDownloader::onlineTileProviderChanged,

@@ -1,0 +1,29 @@
+--- ./CMakeLists.txt	2024-10-11 11:04:34.000000000 +0300
++++ ../maplibre-native-qt_v3.0.0_Source_work/CMakeLists.txt	2025-12-12 14:21:11.555738844 +0200
+@@ -38,6 +38,7 @@
+ option(MLN_QT_WITH_COVERAGE "Build QMapLibre with code coverage collection" OFF)
+ option(MLN_QT_WITH_CLANG_TIDY "Build QMapLibre with clang-tidy checks enabled" OFF)
+ option(MLN_QT_WITH_LTO "Build QMapLibre with Link-Time Optimization" OFF)
++option(MLN_QT_ENABLE_TESTING "Build QMapLibre with tests enabled" OFF)
+ 
+ if(MLN_QT_WITH_LTO)
+     include(CheckIPOSupported)
+@@ -125,12 +126,14 @@
+         $<$<BOOL:${MLN_QT_WITH_COVERAGE}>:--coverage>
+ )
+ 
+-# Enable testing
+-enable_testing()
+-
+ # Add subdirectories
+ add_subdirectory(src)
+-add_subdirectory(test)
++
++if(MLN_QT_ENABLE_TESTING)
++    # Enable testing
++    enable_testing()
++    add_subdirectory(test)
++endif()
+ 
+ # Coverage
+ if(MLN_QT_WITH_COVERAGE)

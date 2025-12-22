@@ -1,0 +1,52 @@
+diff --git a/src/arvgvdevice.c b/src/arvgvdevice.c
+index 8a08c89..af62def 100644
+--- a/src/arvgvdevice.c
++++ b/src/arvgvdevice.c
+@@ -1230,10 +1230,20 @@ arv_gv_device_read_memory (ArvDevice *device, guint64 address, guint32 size, voi
+ 
+ 	for (i = 0; i < (size + ARV_GVCP_DATA_SIZE_MAX - 1) / ARV_GVCP_DATA_SIZE_MAX; i++) {
+ 		block_size = MIN (ARV_GVCP_DATA_SIZE_MAX, size - i * ARV_GVCP_DATA_SIZE_MAX);
+-		if (!_read_memory (gv_device->priv->io_data,
+-				   address + i * ARV_GVCP_DATA_SIZE_MAX,
+-				   block_size, ((char *) buffer) + i * ARV_GVCP_DATA_SIZE_MAX, error))
+-			return FALSE;
++		if(block_size != 4) {
++			if (!_read_memory (gv_device->priv->io_data,
++					   address + i * ARV_GVCP_DATA_SIZE_MAX,
++					   block_size, ((char *) buffer) + i * ARV_GVCP_DATA_SIZE_MAX, error))
++				return FALSE;
++		}
++		else {
++			uint32_t value;
++			if(!_read_register (gv_device->priv->io_data,
++						address + i * ARV_GVCP_DATA_SIZE_MAX,
++						&value, error))
++				return FALSE;
++			*(uint32_t*)(((char *) buffer) + i * ARV_GVCP_DATA_SIZE_MAX) = g_htonl(value);
++		}
+ 	}
+ 
+ 	return TRUE;
+@@ -1248,10 +1258,18 @@ arv_gv_device_write_memory (ArvDevice *device, guint64 address, guint32 size, vo
+ 
+ 	for (i = 0; i < (size + ARV_GVCP_DATA_SIZE_MAX - 1) / ARV_GVCP_DATA_SIZE_MAX; i++) {
+ 		block_size = MIN (ARV_GVCP_DATA_SIZE_MAX, size - i * ARV_GVCP_DATA_SIZE_MAX);
+-		if (!_write_memory (gv_device->priv->io_data,
+-				    address + i * ARV_GVCP_DATA_SIZE_MAX,
+-				    block_size, ((char *) buffer) + i * ARV_GVCP_DATA_SIZE_MAX, error))
+-			return FALSE;
++				if(block_size != 4) {
++			if (!_write_memory (gv_device->priv->io_data,
++					    address + i * ARV_GVCP_DATA_SIZE_MAX,
++					    block_size, ((char *) buffer) + i * ARV_GVCP_DATA_SIZE_MAX, error))
++				return FALSE;
++		}
++		else {
++			if(!_write_register (gv_device->priv->io_data,
++						address + i * ARV_GVCP_DATA_SIZE_MAX,
++						g_htonl(*(uint32_t*)(((char *) buffer) + i * ARV_GVCP_DATA_SIZE_MAX)), error))
++				return FALSE;
++		}
+ 	}
+ 
+ 	return TRUE;

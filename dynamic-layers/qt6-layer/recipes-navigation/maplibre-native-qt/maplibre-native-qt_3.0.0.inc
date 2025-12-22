@@ -1,0 +1,1 @@
+../../../../recipes-navigation/maplibre-native-qt/maplibre-native-qt_3.0.0.inc
