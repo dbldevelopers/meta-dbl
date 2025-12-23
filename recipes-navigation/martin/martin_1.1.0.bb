@@ -774,12 +774,8 @@ do_install:prepend() {
     install -m 0644 ${WORKDIR}/martin.service ${D}${systemd_unitdir}/system
 
     install -d ${D}${sysconfdir}/default/
-    install -Dm 0644 ${WORKDIR}/${PN}.env  ${D}${sysconfdir}/default/${PN}.env
-    install -Dm 0644 ${WORKDIR}/${PN}.yaml ${D}${sysconfdir}/default/${PN}.yaml
-
-    install -d ${D}${sysconfdir}/${PN}/
-	ln -sf ${sysconfdir}/default/${PN}.yaml ${D}${sysconfdir}/${PN}/${PN}.yaml
-    ln -sf ${sysconfdir}/default/${PN}.env ${D}${sysconfdir}/${PN}/${PN}.env 
+    install -Dm 0644 ${WORKDIR}/martin.env  ${D}${sysconfdir}/default/martin/martin.env
+    install -Dm 0644 ${WORKDIR}/martin.yaml ${D}${sysconfdir}/default/martin/martin.yaml
 }
 
 SYSTEMD_SERVICE:${PN} = "martin.service"
@@ -789,8 +785,8 @@ SYSTEMD_AUTO_ENABLE:${PN} ?= "disable"
 ALTERNATIVE_PRIORITY = "10"
 ALTERNATIVE:${PN} = "martin-config martin-env"
 
-ALTERNATIVE_LINK_NAME[martin-config] = "${sysconfdir}/${PN}/${PN}.yaml"
-ALTERNATIVE_TARGET[martin-config] = "${sysconfdir}/default/${PN}.yaml"
+ALTERNATIVE_LINK_NAME[martin-config] = "${sysconfdir}/martin/martin.yaml"
+ALTERNATIVE_LINK_NAME[martin-env]    = "${sysconfdir}/martin/martin.env"
 
-ALTERNATIVE_LINK_NAME[martin-env] = "${sysconfdir}/${PN}/${PN}.env"
-ALTERNATIVE_TARGET[martin-env] = "${sysconfdir}/default/${PN}.env"
+ALTERNATIVE_TARGET[martin-config] = "${sysconfdir}/default/martin/martin.yaml"
+ALTERNATIVE_TARGET[martin-env]    = "${sysconfdir}/default/martin/martin.env"
