@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = " \
 SUMMARY = "Martin is a tile server and a set of tools able to generate vector tiles on the fly from large PostgreSQL databases, and serve tiles from PMTiles and MBTiles files. \
     Martin optimizes for speed and heavy traffic, and is written in Rust."
 
-inherit cargo systemd
+inherit cargo systemd update-alternatives
 
 SRC_URI = "https://github.com/maplibre/martin/archive/refs/tags/martin-v${PV}.tar.gz"
 SRC_URI[md5sum] = "480d7cdb37626c72b86e2538857a95b0"
@@ -16,6 +16,7 @@ SRC_URI[sha256sum] = "9c1381a47817e85a512f4c4152c03a6819440dbb6c17553e983687ad32
 
 SRC_URI += " \
     file://martin.service \
+    file://martin.env \
     file://martin.yaml \
 "
 
@@ -771,9 +772,25 @@ CARGO_BUILD_FLAGS += ' --no-default-features --features postgres,mbtiles'
 do_install:prepend() {
     install -d ${D}${systemd_unitdir}/system/
     install -m 0644 ${WORKDIR}/martin.service ${D}${systemd_unitdir}/system
-    install -Dm 0644 ${WORKDIR}/${PN}.yaml ${D}${sysconfdir}/${PN}/${PN}.yaml
+
+    install -d ${D}${sysconfdir}/default/
+    install -Dm 0644 ${WORKDIR}/${PN}.env  ${D}${sysconfdir}/default/${PN}.env
+    install -Dm 0644 ${WORKDIR}/${PN}.yaml ${D}${sysconfdir}/default/${PN}.yaml
+
+    install -d ${D}${sysconfdir}/${PN}/
+	ln -sf ${sysconfdir}/default/${PN}.yaml ${D}${sysconfdir}/${PN}/${PN}.yaml
+    ln -sf ${sysconfdir}/default/${PN}.env ${D}${sysconfdir}/${PN}/${PN}.env 
 }
 
 SYSTEMD_SERVICE:${PN} = "martin.service"
 SYSTEMD_PACKAGES = "${PN}"
 SYSTEMD_AUTO_ENABLE:${PN} ?= "disable"
+
+ALTERNATIVE_PRIORITY = "10"
+ALTERNATIVE:${PN} = "martin-config martin-env"
+
+ALTERNATIVE_LINK_NAME[martin-config] = "${sysconfdir}/${PN}/${PN}.yaml"
+ALTERNATIVE_TARGET[martin-config] = "${sysconfdir}/default/${PN}.yaml"
+
+ALTERNATIVE_LINK_NAME[martin-env] = "${sysconfdir}/${PN}/${PN}.env"
+ALTERNATIVE_TARGET[martin-env] = "${sysconfdir}/default/${PN}.env"
