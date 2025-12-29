@@ -15,6 +15,7 @@ SRC_URI[md5sum] = "480d7cdb37626c72b86e2538857a95b0"
 SRC_URI[sha256sum] = "9c1381a47817e85a512f4c4152c03a6819440dbb6c17553e983687ad329b7d64"
 
 SRC_URI += " \
+    file://0001-exclude-webui-from-default-features.patch \
     file://martin.service \
     file://martin.env \
     file://martin.yaml \
@@ -763,11 +764,6 @@ SRC_URI += " \
     crate://crates.io/zune-jpeg/0.4.21 \
     crate://crates.io/zune-jpeg/0.5.6 \
 "
-
-# no webui
-CARGO_BUILD_FLAGS += ' --no-default-features --features postgres,mbtiles'
-#DEPENDS = "nodejs-native"
-
 
 do_install:prepend() {
     install -d ${D}${systemd_unitdir}/system/

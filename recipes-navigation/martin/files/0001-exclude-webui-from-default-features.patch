@@ -1,0 +1,11 @@
+diff -ruN '--exclude=target' martin-martin-v1.1.0_default/martin/Cargo.toml martin-martin-v1.1.0_no_webui/martin/Cargo.toml
+--- martin-martin-v1.1.0_default/martin/Cargo.toml	2025-12-15 02:21:52.000000000 +0200
++++ martin-martin-v1.1.0_no_webui/martin/Cargo.toml	2025-12-29 15:22:16.055139434 +0200
+@@ -96,7 +96,6 @@
+     "postgres",
+     "sprites",
+     "styles",
+-    "webui",
+ ]
+ unstable-cog = ["martin-core/unstable-cog", "_tiles"]
+ unstable-rendering = ["styles", "martin-core/unstable-rendering", "dep:image"]
