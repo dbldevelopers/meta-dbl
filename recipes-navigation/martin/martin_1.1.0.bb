@@ -776,7 +776,7 @@ do_install:prepend() {
 
 SYSTEMD_SERVICE:${PN} = "martin.service"
 SYSTEMD_PACKAGES = "${PN}"
-SYSTEMD_AUTO_ENABLE:${PN} ?= "disable"
+SYSTEMD_AUTO_ENABLE:${PN} ?= "enable"
 
 ALTERNATIVE_PRIORITY = "10"
 ALTERNATIVE:${PN} = "martin-config martin-env"
