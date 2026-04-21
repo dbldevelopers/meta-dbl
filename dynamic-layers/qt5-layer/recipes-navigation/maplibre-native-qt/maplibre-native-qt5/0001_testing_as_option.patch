@@ -1,5 +1,5 @@
---- ./CMakeLists.txt	2024-10-11 11:04:34.000000000 +0300
-+++ ../maplibre-native-qt_v3.0.0_Source_work/CMakeLists.txt	2025-12-12 14:21:11.555738844 +0200
+--- a/CMakeLists.txt	2024-10-11 11:04:34.000000000 +0300
++++ b/CMakeLists.txt	2025-12-12 14:21:11.555738844 +0200
 @@ -38,6 +38,7 @@
  option(MLN_QT_WITH_COVERAGE "Build QMapLibre with code coverage collection" OFF)
  option(MLN_QT_WITH_CLANG_TIDY "Build QMapLibre with clang-tidy checks enabled" OFF)
