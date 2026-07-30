@@ -5,7 +5,8 @@ LIC_FILES_CHKSUM = ""
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI = "git://github.com/AravisProject/aravis;branch=main;protocol=https \
+SRC_URI = " \
+	git://github.com/AravisProject/aravis;branch=main;protocol=https \
 	file://0001-priv-iodata-release-fix.patch \
 "
 
@@ -28,6 +29,17 @@ RDEPENDS:${PN} = " \
 "
 
 S = "${WORKDIR}/git"
+
+PACKAGECONFIG[viewer] = "-Dviewer=enabled,-Dviewer=disabled,,,,"
+PACKAGECONFIG[gst-plugin] = "-Dgst-plugin=enabled,-Dgst-plugin=disabled,gstreamer1.0 gstreamer1.0-plugins-base,gstreamer1.0 gstreamer1.0-plugins-base,,"
+PACKAGECONFIG[usb] = "-Dusb=enabled,-Dusb=disabled,libusb1,libusb1,,"
+PACKAGECONFIG[packet-socket] = "-Dpacket-socket=enabled,-Dpacket-socket=disabled,,,,"
+PACKAGECONFIG[fast-heartbeat] = "-Dfast-heartbeat=true,-Dfast-heartbeat=false,,,,"
+
+PACKAGECONFIG ??= " \
+    gst-plugin \
+    usb \
+"
 
 INSANE_SKIP:${PN} = "dev-so"
 
@@ -53,10 +65,8 @@ FILES:${PN}-dbg = " \
 	${bindir}/.debug \
 "
 
-EXTRA_OEMESON += "-Dtests=false \
-				  -Dviewer=disabled \
-				  -Dusb=disabled \
-				  -Ddocumentation=disabled \
-				  -Dintrospection=disabled \
-				  -Dfast-heartbeat=false \
+EXTRA_OEMESON += " \
+	-Dtests=false \
+	-Ddocumentation=disabled \
+	-Dintrospection=disabled \
 "
